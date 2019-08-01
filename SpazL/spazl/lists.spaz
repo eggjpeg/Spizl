@@ -1,0 +1,7 @@
+﻿lint lst 
+int i = 0
+spad(lst,2,3,4,5)
+spre(lst,0)
+
+dospaz i < 10
+	sprint(i).

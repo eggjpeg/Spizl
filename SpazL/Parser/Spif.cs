@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SpazL
+{
+    class Spif: Node
+    {
+        public Expression Exp { get; set; }
+
+        public Spif(List<Token> e)
+        {
+            Exp = new Expression(e,false);
+        }
+        public override string GetInfo()
+        {
+            return "Spif " + Token.ToString(Exp.Exp);
+        }
+    }
+}

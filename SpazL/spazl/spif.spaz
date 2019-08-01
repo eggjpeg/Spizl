@@ -1,0 +1,15 @@
+﻿int i=0
+i = (i + 2)
+spif i >= 5 
+	sprint(5).
+spelz
+	sprint(i - 1).
+
+i = 6
+
+spif i >= 5 
+	sprint(5).
+spelzif i >= 10 
+	sprint(6).
+spelz
+	sprint(i - 1).
