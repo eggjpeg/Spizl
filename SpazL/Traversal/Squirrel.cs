@@ -43,7 +43,11 @@ namespace SpazL
             else if (node is Declaration)
             {
                 Declaration d = (node as Declaration);
-                object r = d.Exp.Eval(state);
+
+                object r = null;
+                if (d.Exp !=null)
+                    r = d.Exp.Eval(state);
+
                 VarState vs = new VarState(d.VarName, d.Type, r);
                 state.Add(vs.Name, vs);
             }
@@ -51,6 +55,9 @@ namespace SpazL
             {
                 Assignment a = (node as Assignment);
                 object r = a.Exp.Eval(state);
+
+
+
                 state[a.VarName].Value = r;
             }
             else if (node is Spif)

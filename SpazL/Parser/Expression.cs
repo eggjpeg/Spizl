@@ -298,6 +298,8 @@ namespace SpazL
                 case "mul": return FunctionLib.Mul(argList);
                 case "sprint": return FunctionLib.Sprint(argList);
                 case "splen": return FunctionLib.Splen(argList);
+                case "spad": return FunctionLib.Spad(argList);
+                case "spre": return FunctionLib.Spre(argList);
                 default: throw new Exception("unknown func " + funcName + ". spaz");
             }
         }
@@ -322,9 +324,22 @@ namespace SpazL
                 n.Value = EvalFunc(n.FunctionName, argList);
                 return n.Value;
             }
-            
-            
-            //Sanity Check
+            else if(n.IsListIndex)
+            {
+                //Sanity Check
+                if (n.ChildList.Count > 1)
+                    throw new Exception("List Index can only have 1 child spaz.");
+                object index = Eval(n.ChildList[0], state);
+                index = Sub(state, index);
+                n.ChildList[0].Value = index; //Sets the value of the Index
+
+                var list = (List<object>)state[n.ListName].Value;
+                n.Value = list[int.Parse(index.ToString())];
+                return n.Value;
+            }
+
+
+            //Sanity check                                                                                       
             if (n.Token.Type != TokenType.Op)
                 throw new Exception("Op Type expected.. spaz.");
 

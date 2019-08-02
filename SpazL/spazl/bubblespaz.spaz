@@ -1,0 +1,18 @@
+﻿lint list
+spad(list,3,0,2,5,4,1)
+int t
+int p = 0
+int i = 0
+int a = 0
+dospaz p <= splen(list)
+	dospaz i <= splen(list)
+		spif list[i] > list[i+1]
+			t = list[i+1]
+			list[i+1] = list[i]
+			list[i] = t .
+		i = i + 1.
+	p = p + 1.
+dospaz a <= splen(list)
+	a = a + 1
+	sprint(list[a]).
+

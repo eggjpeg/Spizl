@@ -70,6 +70,7 @@
     <None Include="spazl\add.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="spazl\bubblespaz.spaz" />
     <None Include="spazl\nested.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

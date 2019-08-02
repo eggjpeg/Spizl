@@ -16,7 +16,12 @@ namespace SpazL
         {
             Name = name;
             Type = type;
-            Value = value;
+            //Suspicious smell
+            if (type == VarType.Lint || type == VarType.Lstr)
+                Value = new List<object>();
+            else
+                Value = value;
+
         }
     }
 }

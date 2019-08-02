@@ -122,6 +122,7 @@ namespace SpazL
                 }
                 else if (line[0].Type == TokenType.VarName)
                 {
+                    //TODO need to redesign this to work as 1 expression
                     Assignment a = new Assignment(line[0].Value, line.GetRange(2, line.Count - 2));
                     parent.Add(a);
                     a.Parent = parent;
