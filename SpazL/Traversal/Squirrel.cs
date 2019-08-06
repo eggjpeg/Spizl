@@ -54,11 +54,20 @@ namespace SpazL
             else if (node is Assignment)
             {
                 Assignment a = (node as Assignment);
-                object r = a.Exp.Eval(state);
+                object r = a.RightExpression.Eval(state);
+                if (a.IsListIndexAssignment())
+                {
+                   
+                    object leftIndex = a.LeftIndexExpression.Eval(state);
+                    int i = int.Parse(leftIndex.ToString());
+                    var list = (List<object>)state[a.VarName].Value;
+                    list[i] = r;
+                }
+                else
+                {
+                    state[a.VarName].Value = r;
+                }
 
-
-
-                state[a.VarName].Value = r;
             }
             else if (node is Spif)
             {

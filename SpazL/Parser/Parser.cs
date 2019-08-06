@@ -120,10 +120,10 @@ namespace SpazL
                     parent.Add(f);
                     f.Parent = parent;
                 }
-                else if (line[0].Type == TokenType.VarName)
+                else
                 {
                     //TODO need to redesign this to work as 1 expression
-                    Assignment a = new Assignment(line[0].Value, line.GetRange(2, line.Count - 2));
+                    Assignment a = new Assignment(line);
                     parent.Add(a);
                     a.Parent = parent;
                 }

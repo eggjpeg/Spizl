@@ -14,7 +14,7 @@ namespace SpazL
         public Function(List<Token> e)
         {
             this.Name = e[0].Value;
-            Exp = new Expression(e, false);
+            Exp = new Expression(e);
         }
         public override string GetInfo()
         {

@@ -22,9 +22,10 @@ namespace SpazL
         public List<Token> ComboOps(List<Token> list)
         {
             var nlist = new List<Token>();
+
             for (int i = 0; i < list.Count; i++)
             {
-
+                bool isDefault = false;
                 if (list.Count-1>i && list[i].SubType != null && list[i+1].SubType != null)
                 {
                     if (list[i].Type == TokenType.Op && list[i + 1].Type == TokenType.Op && (OpType)list[i + 1].SubType == OpType.Equal)
@@ -34,9 +35,14 @@ namespace SpazL
                             case OpType.Lessthan: nlist.Add(new Token(TokenType.Op, OpType.LessThanEq)); break;
                             case OpType.Morethan: nlist.Add(new Token(TokenType.Op, OpType.MoreThanEq)); break;
                             case OpType.Not: nlist.Add(new Token(TokenType.Op, OpType.NotEq)); break;
+                            default: isDefault = true; break;
                         }
-                        i++;
-                        continue;
+
+                        if (!isDefault)
+                        {
+                            i++;
+                            continue;
+                        }
                     }
 
                 }
@@ -49,8 +55,6 @@ namespace SpazL
 
         public List<Token> Tokenize(string spazfile)
         {
-            SymbolTable st = new SymbolTable();
-            st.Load("SpazL/symbols.spaz");
             var list = new List<Token>();
             using (StreamReader sr = new StreamReader(spazfile))
             {

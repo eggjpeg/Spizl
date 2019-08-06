@@ -54,7 +54,7 @@ namespace SpazL
             list.Add(new Token(TokenType.Type, OpType.Multiply));
             list.Add(new Token(TokenType.Const, "7"));
 
-            Expression exp = new Expression(list,false);
+            Expression exp = new Expression(list);
             Console.WriteLine(exp.BuildTree().ToString());
         }
 
@@ -62,7 +62,7 @@ namespace SpazL
         {
             //Step 1. 
             Lexer l = new Lexer();
-            var list = l.Tokenize("Spazl/lists.spaz");
+            var list = l.Tokenize("Spazl/list_ass.spaz");
 
             //Step 2.
             Parser p = new Parser();

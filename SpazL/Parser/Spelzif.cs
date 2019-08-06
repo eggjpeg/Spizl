@@ -12,7 +12,7 @@ namespace SpazL
 
         public Spelzif(List<Token> e)
         {
-            Exp = new Expression(e,false);
+            Exp = new Expression(e);
         }
         public override string GetInfo()
         {

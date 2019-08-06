@@ -25,7 +25,7 @@ namespace SpazL
 
         public DoSpaz(List<Token> e)
         {
-            Exp = new Expression(e, false);
+            Exp = new Expression(e);
         }
         public override string GetInfo()
         {

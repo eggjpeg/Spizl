@@ -62,7 +62,6 @@
     <Compile Include="Parser\Spelz.cs" />
     <Compile Include="Parser\Spelzif.cs" />
     <Compile Include="Parser\Spif.cs" />
-    <Compile Include="SymbolTable.cs" />
     <Compile Include="Token.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,7 +69,9 @@
     <None Include="spazl\add.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\bubblespaz.spaz" />
+    <None Include="spazl\bubblespaz.spaz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="spazl\nested.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -94,6 +95,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="spazl\lists.spaz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="spazl\list_ass.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

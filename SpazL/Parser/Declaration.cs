@@ -16,7 +16,7 @@ namespace SpazL
             Type = type;
             VarName = varName;
             if(exp!=null)
-                Exp = new Expression(exp,false);
+                Exp = new Expression(exp);
         }
 
         public override string GetInfo()

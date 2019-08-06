@@ -12,11 +12,15 @@ namespace SpazL
         public List<Token> Exp { get; set; }
         public ExpNode ExpTree { get; set; }
 
-        public Expression(List<Token> exp, bool skipBuildTree)
+        public Expression(List<Token> exp)
         {
             Exp = exp;
-            if (!skipBuildTree)
-                ExpTree = BuildTree();
+            ExpTree = BuildTree();
+        }
+
+        public Expression(ExpNode expNode)
+        {
+            ExpTree = expNode;
         }
 
 
@@ -275,7 +279,7 @@ namespace SpazL
         public object Eval(State state)
         {
             //KLUDGE
-            ReBuildTree();
+            ReBuildTree();//farm - fix this kludge
             return Eval(ExpTree, state);
         }
 
@@ -304,12 +308,11 @@ namespace SpazL
             }
         }
 
-        private object Eval(ExpNode n, State state)
+        public object Eval(ExpNode n, State state)
         {
             if (n.IsInterpreted())
                 return n.Value;
 
-            
             if(n.IsFunction)
             {
                 List<object> argList = new List<object>();
