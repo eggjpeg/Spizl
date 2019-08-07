@@ -54,6 +54,12 @@ namespace SpazL
                 return true;
         }
 
+        public void ResetValue()
+        {
+            Value = null;
+            if (Token.Type == TokenType.Const || Token.Type == TokenType.VarName)
+                Value = Token.Value;
+        }
 
         public ExpNode(OpType op)
         {
@@ -68,6 +74,8 @@ namespace SpazL
             if (t.Type == TokenType.Const || t.Type == TokenType.VarName)
                 Value = t.Value;
         }
+
+        
 
         public bool IsLeaf()
         {

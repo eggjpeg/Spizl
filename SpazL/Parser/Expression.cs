@@ -279,9 +279,19 @@ namespace SpazL
         public object Eval(State state)
         {
             //KLUDGE
-            ReBuildTree();//farm - fix this kludge
+            //ReBuildTree();//farm - fix this kludge
+            Reset(ExpTree);
             return Eval(ExpTree, state);
         }
+
+        private void Reset(ExpNode n)
+        {
+            n.ResetValue();//farm 
+            if(n.ChildList != null)
+                foreach (var child in n.ChildList)
+                    Reset(child);
+        }
+
 
         private object Sub(State state, object expValue)
         {
