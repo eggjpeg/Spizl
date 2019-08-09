@@ -72,7 +72,6 @@ namespace SpazL
             ToStr(sb, "", false);
             return sb.ToString();
         }
-
         public void ToStr(StringBuilder sb, string indent, bool last)
         {
             sb.Append(indent);

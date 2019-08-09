@@ -1,0 +1,5 @@
+﻿str s = 'spz'
+lstr ls
+
+spad(ls,'ass','spaz')
+
