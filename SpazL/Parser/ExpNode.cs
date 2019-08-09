@@ -44,23 +44,6 @@ namespace SpazL
             }
         }
 
-
-        public object Value = null; //Used for Interpreter
-        public bool IsInterpreted()
-        {
-            if (Value == null)
-                return false;
-            else
-                return true;
-        }
-
-        public void ResetValue()
-        {
-            Value = null;
-            if (Token.Type == TokenType.Const || Token.Type == TokenType.VarName)
-                Value = Token.Value;
-        }
-
         public ExpNode(OpType op)
         {
             this.Token = new Token(TokenType.Op, op);
@@ -70,9 +53,6 @@ namespace SpazL
         public ExpNode(Token t)
         {
             this.Token = t;
-
-            if (t.Type == TokenType.Const || t.Type == TokenType.VarName)
-                Value = t.Value;
         }
 
         

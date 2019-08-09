@@ -23,12 +23,6 @@ namespace SpazL
             ExpTree = expNode;
         }
 
-
-        public void ReBuildTree()
-        {
-            ExpTree = BuildTree();
-        }
-
         public ExpNode BuildTree()
         {
             List<ExpNode> list = new List<ExpNode>();
@@ -111,8 +105,7 @@ namespace SpazL
             {
                 ExpNode fNode = list[bi.Item1 - 1];
                 fNode.IsFunction = true;
-                fNode.Value = null; //KLUDGE
-
+                
                 List<List<ExpNode>> arglist = SplitFuncArguments(innerList);
 
                 foreach (List<ExpNode> arg in arglist)
@@ -147,8 +140,7 @@ namespace SpazL
             {
                 ExpNode lNode = list[bi.Item1 - 1];
                 lNode.IsListIndex = true;
-                lNode.Value = null; //KLUDGE
-
+                
                 List<ExpNode> indexResult = BuildTree(innerList);
                 if (indexResult.Count > 1)
                     throw new Exception("List Index must resolve to a single ExpNode. spaz.");
@@ -276,20 +268,26 @@ namespace SpazL
         }
 
 
+
         public object Eval(State state)
         {
-            //KLUDGE
-            //ReBuildTree();//farm - fix this kludge
-            Reset(ExpTree);
-            return Eval(ExpTree, state);
+            Dictionary<ExpNode, object> valueDict = new Dictionary<ExpNode, object>();
+            return Eval(ExpTree, state, valueDict);
         }
 
-        private void Reset(ExpNode n)
+        private void SetValue(Dictionary<ExpNode, object> valueDict, ExpNode node, object value)
         {
-            n.ResetValue();//farm 
-            if(n.ChildList != null)
-                foreach (var child in n.ChildList)
-                    Reset(child);
+            if (valueDict.ContainsKey(node))
+                valueDict[node] = value;
+            else
+                valueDict.Add(node, value);
+        }
+
+        private object GetValue(Dictionary<ExpNode, object> valueDict, ExpNode node)
+        {
+            if (valueDict.ContainsKey(node))
+                return valueDict[node];
+            return null;
         }
 
 
@@ -318,37 +316,50 @@ namespace SpazL
             }
         }
 
-        public object Eval(ExpNode n, State state)
+        public object Eval(ExpNode n, State state, Dictionary<ExpNode, object> valueDict)
         {
-            if (n.IsInterpreted())
-                return n.Value;
+            if (n.Token.Type == TokenType.Const)
+                return n.Token.Value;
+
+            object v = GetValue(valueDict, n);
+            if (v != null)
+                return v;
 
             if(n.IsFunction)
             {
                 List<object> argList = new List<object>();
                 foreach(ExpNode arg in n.ChildList)
                 {
-                    object r = Eval(arg, state);
+                    object r = Eval(arg, state, valueDict);
                     r = Sub(state, r);
-                    arg.Value = r;
+                    SetValue(valueDict,arg,r);
                     argList.Add(r);
                 }
 
-                n.Value = EvalFunc(n.FunctionName, argList);
-                return n.Value;
+                v = EvalFunc(n.FunctionName, argList);
+                SetValue(valueDict, n, v);
+                return v;
             }
             else if(n.IsListIndex)
             {
                 //Sanity Check
                 if (n.ChildList.Count > 1)
                     throw new Exception("List Index can only have 1 child spaz.");
-                object index = Eval(n.ChildList[0], state);
+                object index = Eval(n.ChildList[0], state, valueDict);
                 index = Sub(state, index);
-                n.ChildList[0].Value = index; //Sets the value of the Index
+                //n.ChildList[0].Value = index; //Sets the value of the Index
+                SetValue(valueDict, n.ChildList[0], index);
 
                 var list = (List<object>)state[n.ListName].Value;
-                n.Value = list[int.Parse(index.ToString())];
-                return n.Value;
+                v = list[int.Parse(index.ToString())];
+                return v;
+            }
+
+            if (n.Token.Type == TokenType.VarName)
+            {
+                v = n.Token.Value;
+                v = Sub(state, v);
+                return v;
             }
 
 
@@ -359,49 +370,60 @@ namespace SpazL
             OpType op = (OpType)n.Token.SubType;
 
             
-            object lValue = Eval(n.ChildList[0], state);
+            object lValue = Eval(n.ChildList[0], state, valueDict);
             lValue = Sub(state, lValue);
 
  
-            object rValue = Eval(n.ChildList[1], state);
+            object rValue = Eval(n.ChildList[1], state, valueDict);
             rValue = Sub(state, rValue);
 
 
             switch (op)
             {
                 case OpType.Plus:
-                    n.Value = ToInt(lValue) + ToInt(rValue);
-                    return n.Value;
+                    v = ToInt(lValue) + ToInt(rValue);
+                    SetValue(valueDict, n, v);
+                    return v;
                 case OpType.Minus:
-                    n.Value = ToInt(lValue) - ToInt(rValue);
-                    return n.Value;
+                    v = ToInt(lValue) - ToInt(rValue);
+                    SetValue(valueDict, n, v);
+                    return v;
                 case OpType.Divide:
-                    n.Value = ToInt(lValue) / ToInt(rValue);
-                    return n.Value;
+                    v = ToInt(lValue) / ToInt(rValue);
+                    SetValue(valueDict, n, v);
+                    return v;
                 case OpType.Multiply:
-                    n.Value = ToInt(lValue) * ToInt(rValue);
-                    return n.Value;
+                    v = ToInt(lValue) * ToInt(rValue);
+                    SetValue(valueDict, n, v);
+                    return v;
                 case OpType.Mod:
-                    n.Value = ToInt(lValue) % ToInt(rValue);
-                    return n.Value;
+                    v = ToInt(lValue) % ToInt(rValue);
+                    SetValue(valueDict, n, v);
+                    return v;
                 case OpType.Equal:
-                    n.Value = ToString(lValue) == ToString(rValue);
-                    return n.Value;
+                    v = ToString(lValue) == ToString(rValue);
+                    SetValue(valueDict, n, v);
+                    return v;
                 case OpType.NotEq:
-                    n.Value = ToString(lValue) != ToString(rValue);
-                    return n.Value;
+                    v = ToString(lValue) != ToString(rValue);
+                    SetValue(valueDict, n, v);
+                    return v;
                 case OpType.Lessthan:
-                    n.Value = ToInt(lValue) < ToInt(rValue);
-                    return n.Value;
+                    v = ToInt(lValue) < ToInt(rValue);
+                    SetValue(valueDict, n, v);
+                    return v;
                 case OpType.LessThanEq:
-                    n.Value = ToInt(lValue) <= ToInt(rValue);
-                    return n.Value;
+                    v = ToInt(lValue) <= ToInt(rValue);
+                    SetValue(valueDict, n, v);
+                    return v;
                 case OpType.Morethan:
-                    n.Value = ToInt(lValue) > ToInt(rValue);
-                    return n.Value;
+                    v = ToInt(lValue) > ToInt(rValue);
+                    SetValue(valueDict, n, v);
+                    return v;
                 case OpType.MoreThanEq:
-                    n.Value = ToInt(lValue) >= ToInt(rValue);
-                    return n.Value;
+                    v = ToInt(lValue) >= ToInt(rValue);
+                    SetValue(valueDict, n, v);
+                    return v;
                 default:
                     throw new NotImplementedException("spaz");
             }
