@@ -48,7 +48,7 @@
     <Compile Include="Parser\ExpNode.cs" />
     <Compile Include="Parser\Expression.cs" />
     <Compile Include="Parser\Function.cs" />
-    <Compile Include="Lexer.cs" />
+    <Compile Include="Lexer\Lexer.cs" />
     <Compile Include="Parser\FunctionLib.cs" />
     <Compile Include="Parser\DoSpaz.cs" />
     <Compile Include="Parser\Node.cs" />
@@ -62,7 +62,7 @@
     <Compile Include="Parser\Spelz.cs" />
     <Compile Include="Parser\Spelzif.cs" />
     <Compile Include="Parser\Spif.cs" />
-    <Compile Include="Token.cs" />
+    <Compile Include="Lexer\Token.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -78,7 +78,9 @@
     <None Include="spazl\simplespaz.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\str.spaz" />
+    <None Include="spazl\str.spaz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="spazl\symbols.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -62,7 +62,7 @@ namespace SpazL
         {
             //Step 1. 
             Lexer l = new Lexer();
-            var list = l.Tokenize("Spazl/bubblespaz.spaz");
+            var list = l.Tokenize("Spazl/str.spaz");
 
             //Step 2.
             Parser p = new Parser();

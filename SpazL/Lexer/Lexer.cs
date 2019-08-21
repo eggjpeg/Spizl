@@ -19,7 +19,9 @@ namespace SpazL
 
         }
 
-        public List<Token> ComboOps(List<Token> list)
+        
+        
+        public List<Token> PostProcessOps(List<Token> list)
         {
             var nlist = new List<Token>();
 
@@ -53,6 +55,46 @@ namespace SpazL
             return nlist;
         }
 
+        //a 's f f' s
+        public static List<string> Split(string line, char seperator)
+        {
+            List<string> result = new List<string>();
+            bool isInString = false;
+
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in line)
+            {
+                if (c == '\'')
+                {
+                    isInString = !isInString;
+                    if (!isInString)
+                    {
+                        result.Add("'" + sb.ToString() + "'");
+                        sb.Clear();
+                    }
+                }
+                else
+                {
+                    if(c == seperator && !isInString)
+                    {
+                        if (sb.Length > 0)
+                        {
+                            result.Add(sb.ToString());
+                            sb.Clear();
+                        }
+                    }
+                    else
+                        sb.Append(c);
+                }
+            }
+
+            if(sb.Length > 0)
+                result.Add(sb.ToString());
+
+            return result;
+
+        }
+
         public List<Token> Tokenize(string spazfile)
         {
             var list = new List<Token>();
@@ -63,21 +105,25 @@ namespace SpazL
                     string line = sr.ReadLine();
 
                     line = SpaceOut(line);
+                    List<string> linear = Split(line,' ');
 
-                    string[] linear = line.Split(' ');
                     foreach (var item in linear)
                     {
-
                         if (item.Trim() == "")
                             continue;
-                        var itml = item.ToLower().Trim();
+
+                        var itml = item;
+                        if(!item.StartsWith("'"))
+                            itml = item.ToLower().Trim();
+
                         var token = Classify(itml);
+                       
                         list.Add(token);
                     }
                     list.Add(new Token(TokenType.Eol));
                 }
             }
-            return ComboOps(list);
+            return PostProcessOps(list);
         }
 
         private bool IsOp(char c)
@@ -87,13 +133,15 @@ namespace SpazL
                     return true;
             return false;
         }
+
+        //TODO: Fix when dealing with quotes
         private string SpaceOut(string line)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < line.Length; i++)
             { 
                 if(IsOp(line[i]))
-                        sb.Append(' ' + line[i].ToString() + ' ');
+                    sb.Append(' ' + line[i].ToString() + ' ');
                 else
                     sb.Append(line[i].ToString());
             }
@@ -102,7 +150,10 @@ namespace SpazL
 
         private Token Classify(string item)
         {
-            switch(item)
+            if(item.StartsWith("'"))
+                return new Token(TokenType.Const, item);
+
+            switch (item)
             {
                 case "spif": return new Token(TokenType.Command, CommandType.Spif);
                 case "spelz": return new Token(TokenType.Command, CommandType.Spelz);
@@ -132,6 +183,7 @@ namespace SpazL
                 case "[": return new Token(TokenType.Op, OpType.Obrack);
                 case "]": return new Token(TokenType.Op, OpType.Cbrack);
                 case ",": return new Token(TokenType.Op, OpType.Comma);
+                case "'": return new Token(TokenType.Op, OpType.Squote);
 
                 default: break;
             }

@@ -52,7 +52,8 @@ namespace SpazL
         Cparen,
         Comma,
         Obrack,
-        Cbrack
+        Cbrack,
+        Squote
     }
     class Token
     {

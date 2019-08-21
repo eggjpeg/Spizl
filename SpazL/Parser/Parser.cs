@@ -122,7 +122,6 @@ namespace SpazL
                 }
                 else
                 {
-                    //TODO need to redesign this to work as 1 expression
                     Assignment a = new Assignment(line);
                     parent.Add(a);
                     a.Parent = parent;
