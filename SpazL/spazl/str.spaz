@@ -5,7 +5,7 @@ lstr ls
 spad(ls,'ass','spaz')
 a=spat(s,' a  ',' d ',' d ')
 
-dospaz(acc < splen(ls))
+dospaz(acc < 1)
 	a = spat(a,ls[acc])
 	acc = acc + 1.
 

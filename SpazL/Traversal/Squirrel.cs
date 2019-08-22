@@ -140,9 +140,10 @@ namespace SpazL
             }
 
             //check to see if you're at the end of a dospaz
-            var doSpaz = GetDoSpaz(node);
-            if (doSpaz != null)
+            var doSpaz = GetDoSpaz(node);  //VERY SUSPICIOUS SMELL, KLUDGE
+            if (doSpaz != null) 
                 Traverse(doSpaz, conCompleted);
+           
 
             //Regular execution
             Node next = GetNextChild(node);
