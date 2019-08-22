@@ -70,6 +70,13 @@ namespace SpazL
             return 0;
         }
 
+        public static string Spat(List<object> list)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in list)
+                sb.Append(item);
+            return sb.ToString();
+        }
 
     }
 }

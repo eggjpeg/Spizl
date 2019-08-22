@@ -312,6 +312,7 @@ namespace SpazL
                 case "splen": return FunctionLib.Splen(argList);
                 case "spad": return FunctionLib.Spad(argList);
                 case "spre": return FunctionLib.Spre(argList);
+                case "spat": return FunctionLib.Spat(argList);
                 default: throw new Exception("unknown func " + funcName + ". spaz");
             }
         }
@@ -331,7 +332,7 @@ namespace SpazL
                 foreach(ExpNode arg in n.ChildList)
                 {
                     object r = Eval(arg, state, valueDict);
-                    r = Sub(state, r);
+                    //r = Sub(state, r); //Maybe Suspecious
                     SetValue(valueDict,arg,r);
                     argList.Add(r);
                 }

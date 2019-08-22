@@ -1,3 +1,12 @@
-﻿str s = 'spz awija waokot wapw joap '
+﻿str s = 'spz awija+waokot wapw joap '
+str a
+int acc = 0
 lstr ls
 spad(ls,'ass','spaz')
+a=spat(s,' a  ',' d ',' d ')
+
+dospaz(acc < splen(ls))
+	a = spat(a,ls[acc])
+	acc = acc + 1.
+
+sprint('bob')

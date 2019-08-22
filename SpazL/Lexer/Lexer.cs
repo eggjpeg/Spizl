@@ -148,11 +148,17 @@ namespace SpazL
             return sb.ToString();
         }
 
+        private string RemoveQuotes(string item)
+        {
+            return item.Replace("'", "");
+        }
+
         private Token Classify(string item)
         {
+            //Unspezify. KLUDGE
             if(item.StartsWith("'"))
-                return new Token(TokenType.Const, item);
-
+                return new Token(TokenType.Const, RemoveQuotes(item));
+            
             switch (item)
             {
                 case "spif": return new Token(TokenType.Command, CommandType.Spif);

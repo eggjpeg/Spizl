@@ -1,4 +1,4 @@
-﻿1. Strings (includes lists)
+﻿1. Strings (includes lists) HUGE BUG !!!
 2. Custom Functions
 3. Clean up 
 4. FARM
