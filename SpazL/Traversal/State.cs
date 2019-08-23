@@ -8,5 +8,6 @@ namespace SpazL
 {
     class State : Dictionary<string,VarState>
     {
+        public bool IsTrace { get; set; }
     }
 }

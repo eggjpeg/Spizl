@@ -18,10 +18,14 @@ namespace SpazL
         private TraverseMode mode;
         private AST ast;
 
-        public Squirrel(AST ast, TraverseMode mode)
+        
+
+
+        public Squirrel(AST ast, TraverseMode mode, bool trace)
         {
             this.mode = mode;
             this.ast = ast;
+            this.state.IsTrace = trace;
         }
 
 
