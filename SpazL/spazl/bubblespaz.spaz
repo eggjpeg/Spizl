@@ -1,5 +1,5 @@
 ﻿lint list
-spad(list,10,3,0,2,5,4,1)
+spad(list,10,3,0,2,5,4,1, 98)
 int t = 0
 int p = 0
 int i = 0
