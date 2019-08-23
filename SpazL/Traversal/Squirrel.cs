@@ -30,8 +30,6 @@ namespace SpazL
             Traverse(ast.Children[0], false);
         }
 
-
-
         private void Traverse(Node node, bool conCompleted)
         {
             if(node is Function)
@@ -133,40 +131,17 @@ namespace SpazL
                     if (node.Children.Count == 0)
                         throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
                     Traverse(node.Children[0], false);
-                    conCompleted = true;
+                    return;
                 }
                 else
                     conCompleted = false;
             }
-
-            //check to see if you're at the end of a dospaz
-            var doSpaz = GetDoSpaz(node);  //VERY SUSPICIOUS SMELL, KLUDGE
-            if (doSpaz != null) 
-                Traverse(doSpaz, conCompleted);
-           
-
             //Regular execution
             Node next = GetNextChild(node);
             if (next != null) 
                 Traverse(next, conCompleted);
       
         }
-        private Node GetDoSpaz(Node n)
-        {
-            if (n == null)
-                return null;
-
-            var r = GetNextChild(n);
-            //this means you're the last child SPAZ 
-            if (r != null)
-                return null;
-
-            if (n.Parent is DoSpaz)
-                return n.Parent;
-
-            return GetDoSpaz(n.Parent);
-        }
-
         private Node GetNextChild(Node n)
         {
             if (n == null || n.Parent == null)
@@ -175,6 +150,11 @@ namespace SpazL
             for (int i = 0; i < n.Parent.Children.Count - 1; i++)
                 if(n.Id == n.Parent.Children[i].Id)
                     return n.Parent.Children[i + 1];
+
+            //If you are here you are looking at the last guy in that branch
+            if (n.Parent is DoSpaz)
+                return n.Parent;
+                
             return null;
         }
 
@@ -190,8 +170,5 @@ namespace SpazL
          spaz: replace vars with values♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿
          spaz: fix naive flow into real ♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿
          */
-
-
-
     }
 }

@@ -107,6 +107,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="spazl\int.spaz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="spazl\todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
