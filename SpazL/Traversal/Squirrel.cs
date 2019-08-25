@@ -40,11 +40,11 @@ namespace SpazL
 
         private void Traverse(Node node, bool conCompleted)
         {
-            if(node is Function)
+            if(node is FunctionCall)
             {
-                if ((node as Function).Name == "spazdun")
+                if ((node as FunctionCall).Name == "spazdun")
                     return;
-                (node as Function).Exp.Eval(state);
+                (node as FunctionCall).Exp.Eval(state);
             }
             else if (node is Declaration)
             {

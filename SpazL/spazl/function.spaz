@@ -1,0 +1,11 @@
+﻿spaz():
+	int a = 2
+	int c = myFun(a,3)
+	sprint(c).
+
+myFun(int a, int b) : int
+	int c = a + b
+	spazdun(c).
+
+myFun2():
+	sprint('crap').

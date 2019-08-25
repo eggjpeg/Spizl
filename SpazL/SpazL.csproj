@@ -47,8 +47,9 @@
     <Compile Include="Parser\Declaration.cs" />
     <Compile Include="Parser\ExpNode.cs" />
     <Compile Include="Parser\Expression.cs" />
-    <Compile Include="Parser\Function.cs" />
+    <Compile Include="Parser\FunctionCall.cs" />
     <Compile Include="Lexer\Lexer.cs" />
+    <Compile Include="Parser\FunctionDef.cs" />
     <Compile Include="Parser\FunctionLib.cs" />
     <Compile Include="Parser\DoSpaz.cs" />
     <Compile Include="Parser\Node.cs" />
@@ -73,6 +74,9 @@
     <None Include="spazl\bubblespaz.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="spazl\function.spaz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="spazl\nested.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -80,9 +84,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="spazl\str.spaz">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="spazl\symbols.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="spazl\spif.spaz">

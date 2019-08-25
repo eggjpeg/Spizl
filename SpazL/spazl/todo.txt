@@ -1,4 +1,4 @@
-﻿1. Strings (includes lists) HUGE BUG !!!
-2. Custom Functions
+﻿1. Custom Functions
+2. Add foreach(dospaz)
 3. Clean up 
 4. FARM

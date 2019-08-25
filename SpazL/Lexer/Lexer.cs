@@ -9,7 +9,7 @@ namespace SpazL
 {
     class Lexer
     {
-        public char[] OpList = { '*', '-', '+', '/', '%', '=', '>', '<','!','(',')','.',',','[',']'};
+        public char[] OpList = { '*', '-', '+', '/', '%', '=', '>', '<','!','(',')','.',',','[',']',':'};
         public void PrintTokens(List<Token> list)
         {
             foreach (var item in list)
@@ -181,7 +181,6 @@ namespace SpazL
                 case "str": return new Token(TokenType.Type, VarType.Str);
                 case "lint": return new Token(TokenType.Type, VarType.Lint);
                 case "lstr": return new Token(TokenType.Type, VarType.Lstr);
-                case "spaz": return new Token(TokenType.Type, VarType.Spaz);
                 case "\n": return new Token(TokenType.Eol);
                 case ".": return new Token(TokenType.Dot);
                 case "(": return new Token(TokenType.Op, OpType.Oparen);
@@ -190,7 +189,7 @@ namespace SpazL
                 case "]": return new Token(TokenType.Op, OpType.Cbrack);
                 case ",": return new Token(TokenType.Op, OpType.Comma);
                 case "'": return new Token(TokenType.Op, OpType.Squote);
-
+                case ":": return new Token(TokenType.Op, OpType.Colon);
                 default: break;
             }
 

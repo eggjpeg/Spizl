@@ -66,6 +66,14 @@ namespace SpazL
             return false;
         }
 
+
+        private bool HasColon(List<Token> line)
+        {
+            foreach (var item in line)
+                if (item.Type == TokenType.Op && (OpType)item.SubType == OpType.Colon)
+                    return true;
+            return false;
+        }
         public Node ProcessLine(List<Token> line, Node parent)
         {
             
@@ -73,9 +81,15 @@ namespace SpazL
             Node newParent = parent;
 
             if(line.Count > 0)
-            { 
-
-                if (line[0].Type == TokenType.Type)
+            {
+                if (HasColon(line))
+                {
+                    FunctionDef f = new FunctionDef(line);
+                    parent.Add(f);
+                    f.Parent = parent;
+                    newParent = f;
+                }
+                else if (line[0].Type == TokenType.Type)
                 {
                     Declaration d;
                     if (line.Count == 2)
@@ -114,9 +128,9 @@ namespace SpazL
                     s.Parent = parent;
                     newParent = s;
                 }
-                else if (line[0].Type == TokenType.Command || IsFunction(line[0].Value))
+                else if (line[0].Type == TokenType.Command || IsFunction(line[0].Value)) //KLUDGE: Suspicious needs to be unspezified.
                 {
-                    Function f = new Function(line);
+                    FunctionCall f = new FunctionCall(line);
                     parent.Add(f);
                     f.Parent = parent;
                 }

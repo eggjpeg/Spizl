@@ -22,7 +22,7 @@ namespace SpazL
         Str,
         Lint,
         Lstr,
-        Spaz
+        Void
     }
     enum CommandType
     {
@@ -53,7 +53,8 @@ namespace SpazL
         Comma,
         Obrack,
         Cbrack,
-        Squote
+        Squote,
+        Colon
     }
     class Token
     {
