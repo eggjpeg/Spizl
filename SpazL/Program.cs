@@ -11,7 +11,8 @@ namespace SpazL
         static void Main(string[] args)
         {
             //SpazL.Run(args[0]);
-            SpazL.Run("spazl/bubblespaz.spaz");
+            string trace = SpazL.Run("spazl/str.spaz");
+
             Console.ReadLine();
         }
     }

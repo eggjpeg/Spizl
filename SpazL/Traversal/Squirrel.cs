@@ -19,6 +19,10 @@ namespace SpazL
         private AST ast;
 
         
+        public string GetTrace()
+        {
+            return state.Trace.ToString();
+        }
 
 
         public Squirrel(AST ast, TraverseMode mode, bool trace)
@@ -156,8 +160,8 @@ namespace SpazL
                     return n.Parent.Children[i + 1];
 
             //If you are here you are looking at the last guy in that branch
-            if (n.Parent is DoSpaz)
-                return n.Parent;
+            //if (n.Parent is DoSpaz)
+            //    return n.Parent;
                 
             return null;
         }

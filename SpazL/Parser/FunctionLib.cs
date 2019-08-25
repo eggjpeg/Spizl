@@ -25,11 +25,17 @@ namespace SpazL
         }
 
 
-        public static int Sprint(List<object> list)
+        public static int Sprint(List<object> list, StringBuilder trace, bool isTrace)
         {
             foreach (var item in list)
+            {
                 Console.Write(item);
+                if (isTrace)
+                    trace.Append(item);
+            }
             Console.WriteLine();
+            if (isTrace)
+                trace.AppendLine();
             return 0;
         }
 

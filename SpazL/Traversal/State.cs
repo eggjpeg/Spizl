@@ -9,5 +9,11 @@ namespace SpazL
     class State : Dictionary<string,VarState>
     {
         public bool IsTrace { get; set; }
+        public StringBuilder Trace { get; set; }
+        
+        public State()
+        {
+            this.Trace = new StringBuilder();
+        }
     }
 }

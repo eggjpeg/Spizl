@@ -302,13 +302,13 @@ namespace SpazL
 
 
 
-        private object EvalFunc(string funcName, List<object> argList)
+        private object EvalFunc(string funcName, List<object> argList, State state)
         {
             switch(funcName.ToLower())
             {
+                case "sprint": return FunctionLib.Sprint(argList, state.Trace, state.IsTrace);
                 case "add": return FunctionLib.Add(argList);
                 case "mul": return FunctionLib.Mul(argList);
-                case "sprint": return FunctionLib.Sprint(argList);
                 case "splen": return FunctionLib.Splen(argList);
                 case "spad": return FunctionLib.Spad(argList);
                 case "spre": return FunctionLib.Spre(argList);
@@ -337,7 +337,7 @@ namespace SpazL
                     argList.Add(r);
                 }
 
-                v = EvalFunc(n.FunctionName, argList);
+                v = EvalFunc(n.FunctionName, argList, state);
                 SetValue(valueDict, n, v);
                 return v;
             }

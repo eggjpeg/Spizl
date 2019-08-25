@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SpazL
 {
-    class SpazL
+    public class SpazL
     {
-        public static void Run(string file)
+        public static string Run(string file)
         {
             //Step 1. 
             Lexer l = new Lexer();
@@ -21,6 +21,7 @@ namespace SpazL
             //Step 3.
             Squirrel sq = new Squirrel(ast, TraverseMode.Interpret, true);
             sq.Traverse();
+            return sq.GetTrace();
         }
     }
 }
