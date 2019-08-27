@@ -12,39 +12,69 @@ namespace SpazL
         Compile
     }
 
+
+
     class Squirrel
     {
-        private State state = new State();
+        private Stack<State> callStack = new Stack<State>();
+        public State State
+        {
+            get {return callStack.Peek();}
+        }
+
         private TraverseMode mode;
         private AST ast;
 
         
         public string GetTrace()
         {
-            return state.Trace.ToString();
+            return State.Trace.ToString();
         }
 
 
-        public Squirrel(AST ast, TraverseMode mode, bool trace)
+        public Squirrel(AST ast, TraverseMode mode)
         {
             this.mode = mode;
             this.ast = ast;
-            this.state.IsTrace = trace;
         }
 
+        private Node FindFunc(string name)
+        {
+            foreach (var item in ast.Children)
+                if(item is FunctionDef)
+                    if ((item as FunctionDef).Name == name)
+                        return item;
+
+            if (name == "spaz")
+                throw new Exception("couldnt find function : " + name + " other than you");
+            else
+                throw new Exception("couldnt find function : " + name + " spaz");
+        }
 
         public void Traverse()
         {
-            Traverse(ast.Children[0], false);
+            Node spaz = FindFunc("spaz");
+            Traverse(spaz, false);
         }
 
         private void Traverse(Node node, bool conCompleted)
         {
-            if(node is FunctionCall)
+            if (node is FunctionDef)
+            {
+                FunctionDef fd = (node as FunctionDef);
+                
+                State state = new State();
+                callStack.Push(state);
+
+                
+
+
+            }
+            if (node is FunctionCall)
             {
                 if ((node as FunctionCall).Name == "spazdun")
                     return;
-                (node as FunctionCall).Exp.Eval(state);
+                (node as FunctionCall).Exp.Eval(State);
             }
             else if (node is Declaration)
             {
@@ -52,33 +82,33 @@ namespace SpazL
 
                 object r = null;
                 if (d.Exp !=null)
-                    r = d.Exp.Eval(state);
+                    r = d.Exp.Eval(State);
 
                 VarState vs = new VarState(d.VarName, d.Type, r);
-                state.Add(vs.Name, vs);
+                State.Add(vs.Name, vs);
             }
             else if (node is Assignment)
             {
                 Assignment a = (node as Assignment);
-                object r = a.RightExpression.Eval(state);
+                object r = a.RightExpression.Eval(State);
                 if (a.IsListIndexAssignment())
                 {
                    
-                    object leftIndex = a.LeftIndexExpression.Eval(state);
+                    object leftIndex = a.LeftIndexExpression.Eval(State);
                     int i = int.Parse(leftIndex.ToString());
-                    var list = (List<object>)state[a.VarName].Value;
+                    var list = (List<object>)State[a.VarName].Value;
                     list[i] = r;
                 }
                 else
                 {
-                    state[a.VarName].Value = r;
+                    State[a.VarName].Value = r;
                 }
 
             }
             else if (node is Spif)
             {
                 Spif spif = (node as Spif);
-                object r = spif.Exp.Eval(state);
+                object r = spif.Exp.Eval(State);
                 if (!(r is bool))
                     throw new Exception("SPAZ spif must evaluate to bool SPAZ");
                 bool rb = (bool)r;
@@ -100,7 +130,7 @@ namespace SpazL
                     throw new Exception("spaz cant have else if without previous spif or spelzif SPAZ");
                 if (!(conCompleted))
                 {
-                    object r = spelzIf.Exp.Eval(state);
+                    object r = spelzIf.Exp.Eval(State);
                     if (!(r is bool))
                         throw new Exception("SPAZ spelzif must evaluate to bool SPAZ");
                     bool rb = (bool)r;
@@ -130,7 +160,7 @@ namespace SpazL
             else if (node is DoSpaz)
             {
                 DoSpaz loop = (node as DoSpaz);
-                object r = loop.Exp.Eval(state);
+                object r = loop.Exp.Eval(State);
                 if (!(r is bool))
                     throw new Exception("SPAZ dospaz must evaluate to bool SPAZ");
                 bool rb = (bool)r;
@@ -160,8 +190,8 @@ namespace SpazL
                     return n.Parent.Children[i + 1];
 
             //If you are here you are looking at the last guy in that branch
-            //if (n.Parent is DoSpaz)
-            //    return n.Parent;
+            if (n.Parent is DoSpaz)
+                return n.Parent;
                 
             return null;
         }

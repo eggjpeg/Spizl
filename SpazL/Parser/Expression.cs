@@ -334,7 +334,6 @@ namespace SpazL
                 foreach(ExpNode arg in n.ChildList)
                 {
                     object r = Eval(arg, state, valueDict);
-                    //r = Sub(state, r); //Maybe Suspicious
                     SetValue(valueDict,arg,r);
                     argList.Add(r);
                 }

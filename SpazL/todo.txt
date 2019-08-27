@@ -1,4 +1,5 @@
 ﻿1. Custom Functions
 2. Add foreach(dospaz)
-3. Clean up 
-4. FARM
+3. Add Spazdun/Spazout
+4. Clean up 
+5. FARM

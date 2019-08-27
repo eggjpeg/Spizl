@@ -1,0 +1,4 @@
+﻿factorial(int n):
+	spif n = 0
+		spazdun 1.
+	spazdun n * factorial(n - 1).
