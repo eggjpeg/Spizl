@@ -43,24 +43,26 @@ namespace SpazL
             //myFun int a, int b : int
             for (int i = 1; i < expList.Count; i++)
             {
-                Token t = expList[i];
+                Token thisGuy = expList[i];
+                Token nextGuy = expList.Count > i + 1 ? expList[i + 1]: null;
+
                 //farm parens
-                if (t.Type == TokenType.Op && ((OpType)t.SubType == OpType.Oparen || (OpType)t.SubType == OpType.Cparen || (OpType)t.SubType == OpType.Comma))
+                if (thisGuy.Type == TokenType.Op && ((OpType)thisGuy.SubType == OpType.Oparen || (OpType)thisGuy.SubType == OpType.Cparen || (OpType)thisGuy.SubType == OpType.Comma))
                     continue;
                 //If you hit a colon, then check for return type
-                if (t.Type == TokenType.Op && (OpType)t.SubType == OpType.Colon)
+                if (thisGuy.Type == TokenType.Op && (OpType)thisGuy.SubType == OpType.Colon)
                 {
                     //Is there a return type?
-                    if (expList.Count > i + 1 && expList[i + 1].Type == TokenType.Type)
-                        this.ReturnType = (VarType)t.SubType;
+                    if(nextGuy != null)
+                        this.ReturnType = (VarType)nextGuy.SubType;
                     else
                         this.ReturnType = VarType.Void;
                     break;
                 }
 
-                string name = expList[i + 1].Value;
+                string name = nextGuy.Value;
                 //here we expect a var type and a name 
-                FunctionParam p = new FunctionParam((VarType)t.SubType, name);
+                FunctionParam p = new FunctionParam((VarType)thisGuy.SubType, name);
                 Params.Add(p);
                 i++;
             }

@@ -60,6 +60,8 @@ namespace SpazL
         private List<List<ExpNode>> SplitFuncArguments(List<ExpNode> list)
         {
             List<List<ExpNode>> rlist = new List<List<ExpNode>>();
+            if (list.Count == 0)
+                return rlist;
 
             List<ExpNode> curList = new List<ExpNode>();
             foreach (ExpNode node in list)

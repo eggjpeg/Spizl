@@ -53,24 +53,10 @@ namespace SpazL
             return r;
         }
 
-        private bool IsFunction(string function)
-        {
-            switch (function)
-            {
-                case "add":
-                case "splen":
-                case "spad":
-                case "spre":
-                    return true;
-            }
-            return false;
-        }
-
-
-        private bool HasColon(List<Token> line)
+        private bool HasOp(List<Token> line, OpType op)
         {
             foreach (var item in line)
-                if (item.Type == TokenType.Op && (OpType)item.SubType == OpType.Colon)
+                if (item.Type == TokenType.Op && (OpType)item.SubType == op)
                     return true;
             return false;
         }
@@ -82,7 +68,7 @@ namespace SpazL
 
             if(line.Count > 0)
             {
-                if (HasColon(line))
+                if (HasOp(line, OpType.Colon))
                 {
                     FunctionDef f = new FunctionDef(line);
                     parent.Add(f);
@@ -128,19 +114,20 @@ namespace SpazL
                     s.Parent = parent;
                     newParent = s;
                 }
-                else if (line[0].Type == TokenType.Command || IsFunction(line[0].Value)) //KLUDGE: Suspicious needs to be unspezified.
+                else if (HasOp(line, OpType.Oparen)) 
                 {
                     FunctionCall f = new FunctionCall(line);
                     parent.Add(f);
                     f.Parent = parent;
                 }
-                else
+                else if(HasOp(line, OpType.Equal))
                 {
                     Assignment a = new Assignment(line);
                     parent.Add(a);
                     a.Parent = parent;
                 }
-
+                else
+                    throw new Exception("Unknown line. spaz.");
             }
 
 

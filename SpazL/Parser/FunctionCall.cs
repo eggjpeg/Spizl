@@ -13,12 +13,16 @@ namespace SpazL
     
         public FunctionCall(List<Token> e)
         {
-            this.Name = e[0].Value;
+            if (e[0].Type == TokenType.Command)
+                this.Name = e[0].SubType.ToString();
+            else
+                this.Name = e[0].Value;
+
             Exp = new Expression(e);
         }
         public override string GetInfo()
         {
-            return "Func "+ Name ;
+            return "Func " + Name ;
         }
     }
 }
