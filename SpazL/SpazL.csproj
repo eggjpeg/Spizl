@@ -55,6 +55,7 @@
     <Compile Include="Parser\Node.cs" />
     <Compile Include="Parser\Parser.cs" />
     <Compile Include="SpazL.cs" />
+    <Compile Include="Parser\Spazdun.cs" />
     <Compile Include="Traversal\Squirrel.cs" />
     <Compile Include="Traversal\State.cs" />
     <Compile Include="Traversal\VarState.cs" />

@@ -6,38 +6,58 @@ using System.Threading.Tasks;
 
 namespace SpazL
 {
-    public enum TraverseMode
-    {
-        Interpret,
-        Compile
-    }
-
-
-
     class Squirrel
     {
-        private Stack<State> callStack = new Stack<State>();
-        public State State
-        {
-            get {return callStack.Peek();}
-        }
-
-        private TraverseMode mode;
+        private State State = new State();
+        private string funcName = "spaz";
         private AST ast;
+        List<VarState> argList = new List<VarState>();
 
-        
+
         public string GetTrace()
         {
             return State.Trace.ToString();
         }
 
 
-        public Squirrel(AST ast, TraverseMode mode)
+        public Squirrel(AST ast)
         {
-            this.mode = mode;
             this.ast = ast;
         }
 
+        private void AddArgsToState(FunctionDef fd)
+        {
+            for (int i = 0; i < fd.Params.Count; i++)
+            {
+                //suspicious copying - needs testing
+                VarState vs = new VarState(fd.Params[i].Name, argList[i].Type, argList[i].Value);
+                State.Add(argList[i].Name, vs);
+            }
+            
+        }
+
+        //Used by functions
+        public Squirrel(AST ast, List<VarState> argList, string funcName)
+        {
+            this.ast = ast;
+            this.funcName = funcName;
+            this.argList = argList;
+            //Add all the argument to the state.
+            
+
+        }
+        private void ValidateArgs(FunctionDef fd)
+        {
+            if (fd.Params.Count > argList.Count)
+                throw new Exception("SPAZ DOESNT HAVE ENOUGH ARGUMENTS");
+            if (fd.Params.Count > argList.Count)
+                throw new Exception("SPAZ HAS TOO MANY ARGUMENTS");
+            for (int i = 0; i < fd.Params.Count; i++)
+            {
+                if (fd.Params[i].Type != argList[i].Type)
+                    throw new Exception("type mismatch SPAZ. Expecting a " + fd.Params[i].Type.ToString() + " but received: " + argList[i].Type.ToString());
+            }
+        }
         private Node FindFunc(string name)
         {
             foreach (var item in ast.Children)
@@ -53,27 +73,31 @@ namespace SpazL
 
         public void Traverse()
         {
-            Node spaz = FindFunc("spaz");
-            Traverse(spaz, false);
+            Node spazFunc = FindFunc(funcName);
+            Traverse(spazFunc, false);
         }
 
-        private void Traverse(Node node, bool conCompleted)
+        private object Traverse(Node node, bool conCompleted)
         {
-            if (node is FunctionDef)
+
+            if(node is SpazDun)
+            {
+                return (node as SpazDun).Exp.Eval(State);
+                //return exp
+            }
+            else if (node is FunctionDef)
             {
                 FunctionDef fd = (node as FunctionDef);
-                
-                State state = new State();
-                callStack.Push(state);
+                ValidateArgs(fd);
+                AddArgsToState(fd);
 
-                
-
-
+                if (node.Children.Count == 0)
+                    throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
+                Traverse(node.Children[0], false);
+                return null;
             }
-            if (node is FunctionCall)
+            else if (node is FunctionCall)
             {
-                if ((node as FunctionCall).Name == "spazdun")
-                    return;
                 (node as FunctionCall).Exp.Eval(State);
             }
             else if (node is Declaration)
@@ -169,7 +193,7 @@ namespace SpazL
                     if (node.Children.Count == 0)
                         throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
                     Traverse(node.Children[0], false);
-                    return;
+                    return null;
                 }
                 else
                     conCompleted = false;

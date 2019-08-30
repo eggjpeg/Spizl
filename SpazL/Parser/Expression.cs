@@ -315,7 +315,8 @@ namespace SpazL
                 case "spad": return FunctionLib.Spad(argList);
                 case "spre": return FunctionLib.Spre(argList);
                 case "spat": return FunctionLib.Spat(argList);
-                default: throw new Exception("unknown func " + funcName + ". spaz");
+                default: 
+
             }
         }
 
