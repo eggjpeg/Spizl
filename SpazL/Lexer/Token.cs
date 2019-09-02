@@ -22,7 +22,8 @@ namespace SpazL
         Str,
         Lint,
         Lstr,
-        Void
+        Void,
+        Unknown
     }
     enum CommandType
     {

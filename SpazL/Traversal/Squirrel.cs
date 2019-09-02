@@ -11,7 +11,7 @@ namespace SpazL
         private State State = new State();
         private string funcName = "spaz";
         private AST ast;
-        List<VarState> argList = new List<VarState>();
+        List<object> argList = new List<object>();
 
 
         public string GetTrace()
@@ -30,33 +30,30 @@ namespace SpazL
             for (int i = 0; i < fd.Params.Count; i++)
             {
                 //suspicious copying - needs testing
-                VarState vs = new VarState(fd.Params[i].Name, argList[i].Type, argList[i].Value);
-                State.Add(argList[i].Name, vs);
+                VarState vs = new VarState(fd.Params[i].Name, fd.Params[i].Type, argList[i]);
+                State.Add(fd.Params[i].Name, vs);
             }
             
         }
 
         //Used by functions
-        public Squirrel(AST ast, List<VarState> argList, string funcName)
+        public Squirrel(AST ast, List<object> argList, string funcName)
         {
             this.ast = ast;
             this.funcName = funcName;
             this.argList = argList;
-            //Add all the argument to the state.
-            
-
         }
         private void ValidateArgs(FunctionDef fd)
         {
             if (fd.Params.Count > argList.Count)
                 throw new Exception("SPAZ DOESNT HAVE ENOUGH ARGUMENTS");
-            if (fd.Params.Count > argList.Count)
+            if (fd.Params.Count < argList.Count)
                 throw new Exception("SPAZ HAS TOO MANY ARGUMENTS");
-            for (int i = 0; i < fd.Params.Count; i++)
-            {
-                if (fd.Params[i].Type != argList[i].Type)
-                    throw new Exception("type mismatch SPAZ. Expecting a " + fd.Params[i].Type.ToString() + " but received: " + argList[i].Type.ToString());
-            }
+            //for (int i = 0; i < fd.Params.Count; i++)
+            //{
+            //    if (fd.Params[i].Type != argList[i].Type)
+            //        throw new Exception("type mismatch SPAZ. Expecting a " + fd.Params[i].Type.ToString() + " but received: " + argList[i].Type.ToString());
+            //}
         }
         private Node FindFunc(string name)
         {
@@ -71,21 +68,16 @@ namespace SpazL
                 throw new Exception("couldnt find function : " + name + " spaz");
         }
 
-        public void Traverse()
+        public object Traverse()
         {
             Node spazFunc = FindFunc(funcName);
-            Traverse(spazFunc, false);
+            return Traverse(spazFunc, false);
         }
 
         private object Traverse(Node node, bool conCompleted)
         {
 
-            if(node is SpazDun)
-            {
-                return (node as SpazDun).Exp.Eval(State);
-                //return exp
-            }
-            else if (node is FunctionDef)
+            if (node is FunctionDef)
             {
                 FunctionDef fd = (node as FunctionDef);
                 ValidateArgs(fd);
@@ -96,9 +88,17 @@ namespace SpazL
                 Traverse(node.Children[0], false);
                 return null;
             }
+            else if (node is Spazdun)
+            {
+                if ((node as Spazdun).Exp == null)
+                    return null;
+
+                object r = (node as Spazdun).Exp.Eval(ast, State);
+                return r;
+            }
             else if (node is FunctionCall)
             {
-                (node as FunctionCall).Exp.Eval(State);
+                (node as FunctionCall).Exp.Eval(ast, State);
             }
             else if (node is Declaration)
             {
@@ -106,7 +106,7 @@ namespace SpazL
 
                 object r = null;
                 if (d.Exp !=null)
-                    r = d.Exp.Eval(State);
+                    r = d.Exp.Eval(ast, State);
 
                 VarState vs = new VarState(d.VarName, d.Type, r);
                 State.Add(vs.Name, vs);
@@ -114,11 +114,11 @@ namespace SpazL
             else if (node is Assignment)
             {
                 Assignment a = (node as Assignment);
-                object r = a.RightExpression.Eval(State);
+                object r = a.RightExpression.Eval(ast, State);
                 if (a.IsListIndexAssignment())
                 {
                    
-                    object leftIndex = a.LeftIndexExpression.Eval(State);
+                    object leftIndex = a.LeftIndexExpression.Eval(ast, State);
                     int i = int.Parse(leftIndex.ToString());
                     var list = (List<object>)State[a.VarName].Value;
                     list[i] = r;
@@ -132,7 +132,7 @@ namespace SpazL
             else if (node is Spif)
             {
                 Spif spif = (node as Spif);
-                object r = spif.Exp.Eval(State);
+                object r = spif.Exp.Eval(ast, State);
                 if (!(r is bool))
                     throw new Exception("SPAZ spif must evaluate to bool SPAZ");
                 bool rb = (bool)r;
@@ -154,7 +154,7 @@ namespace SpazL
                     throw new Exception("spaz cant have else if without previous spif or spelzif SPAZ");
                 if (!(conCompleted))
                 {
-                    object r = spelzIf.Exp.Eval(State);
+                    object r = spelzIf.Exp.Eval(ast, State);
                     if (!(r is bool))
                         throw new Exception("SPAZ spelzif must evaluate to bool SPAZ");
                     bool rb = (bool)r;
@@ -184,7 +184,7 @@ namespace SpazL
             else if (node is DoSpaz)
             {
                 DoSpaz loop = (node as DoSpaz);
-                object r = loop.Exp.Eval(State);
+                object r = loop.Exp.Eval(ast, State);
                 if (!(r is bool))
                     throw new Exception("SPAZ dospaz must evaluate to bool SPAZ");
                 bool rb = (bool)r;
@@ -202,7 +202,8 @@ namespace SpazL
             Node next = GetNextChild(node);
             if (next != null) 
                 Traverse(next, conCompleted);
-      
+
+            return null;
         }
         private Node GetNextChild(Node n)
         {

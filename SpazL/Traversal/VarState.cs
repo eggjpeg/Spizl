@@ -17,7 +17,7 @@ namespace SpazL
             Name = name;
             Type = type;
             //Suspicious smell
-            if (type == VarType.Lint || type == VarType.Lstr)
+            if ((type == VarType.Lint || type == VarType.Lstr) && value == null)
                 Value = new List<object>();
             else
                 Value = value;

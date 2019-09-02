@@ -19,7 +19,7 @@ namespace SpazL
             AST ast = p.Parse(list);
 
             //Step 3.
-            Squirrel sq = new Squirrel(ast, TraverseMode.Interpret);
+            Squirrel sq = new Squirrel(ast);
             sq.Traverse();
             return sq.GetTrace();
         }

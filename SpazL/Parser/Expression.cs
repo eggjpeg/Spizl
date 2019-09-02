@@ -271,11 +271,7 @@ namespace SpazL
 
 
 
-        public object Eval(State state)
-        {
-            Dictionary<ExpNode, object> valueDict = new Dictionary<ExpNode, object>();
-            return Eval(ExpTree, state, valueDict);
-        }
+  
 
         private void SetValue(Dictionary<ExpNode, object> valueDict, ExpNode node, object value)
         {
@@ -304,7 +300,14 @@ namespace SpazL
 
 
 
-        private object EvalFunc(string funcName, List<object> argList, State state)
+        private object EvalCustomFunc(AST ast, string funcName, List<object> argList, State state)
+        {
+            Squirrel sq = new Squirrel(ast, argList, funcName);
+            return sq.Traverse();
+        }
+
+
+        private object EvalFunc(AST ast, string funcName, List<object> argList, State state)
         {
             switch(funcName.ToLower())
             {
@@ -315,12 +318,17 @@ namespace SpazL
                 case "spad": return FunctionLib.Spad(argList);
                 case "spre": return FunctionLib.Spre(argList);
                 case "spat": return FunctionLib.Spat(argList);
-                default: 
-
+                default: return EvalCustomFunc(ast, funcName, argList, state);
             }
         }
 
-        public object Eval(ExpNode n, State state, Dictionary<ExpNode, object> valueDict)
+        public object Eval(AST ast, State state)
+        {
+            Dictionary<ExpNode, object> valueDict = new Dictionary<ExpNode, object>();
+            return Eval(ast, ExpTree, state, valueDict);
+        }
+
+        public object Eval(AST ast, ExpNode n, State state, Dictionary<ExpNode, object> valueDict)
         {
             if (n.Token.Type == TokenType.Const)
                 return n.Token.Value;
@@ -334,12 +342,12 @@ namespace SpazL
                 List<object> argList = new List<object>();
                 foreach(ExpNode arg in n.ChildList)
                 {
-                    object r = Eval(arg, state, valueDict);
+                    object r = Eval(ast, arg, state, valueDict);
                     SetValue(valueDict,arg,r);
                     argList.Add(r);
                 }
 
-                v = EvalFunc(n.FunctionName, argList, state);
+                v = EvalFunc(ast, n.FunctionName, argList, state);
                 SetValue(valueDict, n, v);
                 return v;
             }
@@ -348,7 +356,7 @@ namespace SpazL
                 //Sanity Check
                 if (n.ChildList.Count > 1)
                     throw new Exception("List Index can only have 1 child spaz.");
-                object index = Eval(n.ChildList[0], state, valueDict);
+                object index = Eval(ast, n.ChildList[0], state, valueDict);
                 index = Sub(state, index);
                 //n.ChildList[0].Value = index; //Sets the value of the Index
                 SetValue(valueDict, n.ChildList[0], index);
@@ -373,11 +381,11 @@ namespace SpazL
             OpType op = (OpType)n.Token.SubType;
 
             
-            object lValue = Eval(n.ChildList[0], state, valueDict);
+            object lValue = Eval(ast, n.ChildList[0], state, valueDict);
             lValue = Sub(state, lValue);
 
  
-            object rValue = Eval(n.ChildList[1], state, valueDict);
+            object rValue = Eval(ast, n.ChildList[1], state, valueDict);
             rValue = Sub(state, rValue);
 
 

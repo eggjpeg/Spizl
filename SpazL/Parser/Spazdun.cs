@@ -9,10 +9,8 @@ namespace SpazL
     class Spazdun: Node
     {
         public Expression Exp { get; set; }
-        public Spazdun(VarType type, string varName, List<Token> exp)
+        public Spazdun(List<Token> exp)
         {
-            Type = type;
-            VarName = varName;
             if (exp != null)
                 Exp = new Expression(exp);
         }
