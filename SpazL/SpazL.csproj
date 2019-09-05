@@ -69,6 +69,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="spazl\Quicksort.spaz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="spazl\add.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -78,6 +81,7 @@
     <None Include="spazl\factorial.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="spazl\factorial2.spaz" />
     <None Include="spazl\function.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

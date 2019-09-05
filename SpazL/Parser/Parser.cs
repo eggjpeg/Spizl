@@ -61,6 +61,13 @@ namespace SpazL
             return false;
         }
 
+        private List<Token> GetRange(List<Token> line, int index, int count)
+        {
+            if (line.Count >= index + count)
+                return line.GetRange(1, line.Count - 1);
+            else
+                return null;
+        }
 
         public Node ProcessLine(List<Token> line, Node parent)
         {
@@ -68,8 +75,10 @@ namespace SpazL
             int kd = KillDots(line);
             Node newParent = parent;
 
-            if(line.Count > 0)
+            if(line.Count > 0) 
             {
+
+                //TODO: suspicious use factory pattern to refactor this stuff.
                 if (HasOp(line, OpType.Colon))
                 {
                     FunctionDef f = new FunctionDef(line);
@@ -90,7 +99,7 @@ namespace SpazL
                 }
                 else if(line[0].Type == TokenType.Command && (CommandType)line[0].SubType == CommandType.DoSpaz)
                 {
-                    DoSpaz l = new DoSpaz(line.GetRange(1, line.Count - 1));
+                    DoSpaz l = new DoSpaz(GetRange(line, 1, line.Count - 1));
                     parent.Add(l);
                     l.Parent = parent;
                     newParent = l;
@@ -115,6 +124,12 @@ namespace SpazL
                     parent.Add(s);
                     s.Parent = parent;
                     newParent = s;
+                }
+                else if (line[0].Type == TokenType.Command && (CommandType)line[0].SubType == CommandType.Spazdun)
+                {
+                    Spazdun s = new Spazdun(GetRange(line, 1, line.Count - 1));
+                    parent.Add(s);
+                    s.Parent = parent;
                 }
                 else if (HasOp(line, OpType.Oparen)) 
                 {

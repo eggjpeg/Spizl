@@ -74,9 +74,14 @@ namespace SpazL
             return Traverse(spazFunc, false);
         }
 
+        private bool swordOfKhali = false;
+        private object ret = null;
+
         private object Traverse(Node node, bool conCompleted)
         {
-
+            if (swordOfKhali)
+                return ret;
+            
             if (node is FunctionDef)
             {
                 FunctionDef fd = (node as FunctionDef);
@@ -85,16 +90,17 @@ namespace SpazL
 
                 if (node.Children.Count == 0)
                     throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
-                Traverse(node.Children[0], false);
-                return null;
+                
+                return Traverse(node.Children[0], false);
             }
             else if (node is Spazdun)
             {
                 if ((node as Spazdun).Exp == null)
                     return null;
 
-                object r = (node as Spazdun).Exp.Eval(ast, State);
-                return r;
+                ret = (node as Spazdun).Exp.Eval(ast, State);
+                swordOfKhali = true;
+                return ret;
             }
             else if (node is FunctionCall)
             {
@@ -140,7 +146,7 @@ namespace SpazL
                 {
                     if (node.Children.Count == 0)
                         throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS IF STATEMENT");
-                    Traverse(node.Children[0], false);
+                    ret = Traverse(node.Children[0], false);
                     conCompleted = true;
                 }
                 else
@@ -162,7 +168,7 @@ namespace SpazL
                     {
                         if (node.Children.Count == 0)
                             throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS SPELZIF STATEMENT");
-                        Traverse(node.Children[0], false);
+                        ret = Traverse(node.Children[0], false);
                         conCompleted = true;
                     }
                 }
@@ -177,7 +183,7 @@ namespace SpazL
                 {
                      if (node.Children.Count == 0)
                             throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS SPELZ STATEMENT");
-                        Traverse(node.Children[0], false);
+                     ret = Traverse(node.Children[0], false);
                     
                 }
             }
@@ -192,18 +198,17 @@ namespace SpazL
                 {
                     if (node.Children.Count == 0)
                         throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
-                    Traverse(node.Children[0], false);
-                    return null;
+                    return Traverse(node.Children[0], false); 
                 }
                 else
                     conCompleted = false;
             }
             //Regular execution
             Node next = GetNextChild(node);
-            if (next != null) 
-                Traverse(next, conCompleted);
+            if (next != null)
+                ret = Traverse(next, conCompleted);
 
-            return null;
+            return ret;
         }
         private Node GetNextChild(Node n)
         {

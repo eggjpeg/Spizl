@@ -1,5 +1,5 @@
-﻿1. Custom Functions
+﻿1. Add Spazdun/Spazout (Debug Quicksort)
 2. Add foreach(dospaz)
-3. Add Spazdun/Spazout
+3. Do comments
 4. Clean up 
 5. FARM

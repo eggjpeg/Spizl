@@ -1,0 +1,32 @@
+﻿Partition(lint numbers, int left, int right): int
+	int pivot = numbers[left]
+	int temp = 0
+	dospaz 1 = 1 
+		dospaz numbers[left] < pivot
+			left = left + 1.
+		dospaz numbers[right] > pivot
+            right = right - 1.
+		spif left < right
+			temp = numbers[right]
+			numbers[right] = numbers[left]
+            numbers[left] = temp.
+		spelz
+			spazdun right...
+
+Sort(lint arr, int left, int right):
+	int pivot = 0
+	spif left < right
+		pivot = Partition(arr, left, right)
+		spif pivot > 1
+			Sort(arr, left, pivot - 1).
+		spif pivot + 1 < right
+			Sort(arr, pivot + 1, right)...
+
+spaz:
+	lint list
+	int i = 0
+	spad(list,4,2,3,10)
+	Sort(list,0,splen(list)-1)
+	dospaz i < splen(lst)
+		sprint(lst[i])
+		i = i + 1..
