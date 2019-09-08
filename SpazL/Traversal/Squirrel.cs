@@ -75,6 +75,8 @@ namespace SpazL
         }
 
         private bool swordOfKhali = false;
+        private int spazoutLevel = 0;
+        private bool spazoutInitiated = false;
         private object ret = null;
 
         private object Traverse(Node node, bool conCompleted)
@@ -100,6 +102,15 @@ namespace SpazL
 
                 ret = (node as Spazdun).Exp.Eval(ast, State);
                 swordOfKhali = true;
+                return ret;
+            }
+            else if (node is Spazout)
+            {
+                spazoutInitiated = true;
+                if ((node as Spazout).Exp == null)
+                    return null;
+
+                ret = (node as Spazout).Exp.Eval(ast, State);
                 return ret;
             }
             else if (node is FunctionCall)
@@ -198,22 +209,39 @@ namespace SpazL
                 {
                     if (node.Children.Count == 0)
                         throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
-                    return Traverse(node.Children[0], false); 
+                    ret = Traverse(node.Children[0], false); 
                 }
                 else
                     conCompleted = false;
             }
+
+
             //Regular execution
             Node next = GetNextChild(node);
-            if (next != null)
+            if (next != null && !swordOfKhali)
                 ret = Traverse(next, conCompleted);
 
             return ret;
         }
+
+        private Node GetSpazoutNext(Node n)
+        {
+            Node p = n;
+            while (!(p is DoSpaz))
+                p = p.Parent;
+            
+            spazoutInitiated = false;
+            return GetNextChild(p);
+        }
+
         private Node GetNextChild(Node n)
         {
             if (n == null || n.Parent == null)
                 return null;
+
+            if (spazoutInitiated)
+                return GetSpazoutNext(n);
+
 
             for (int i = 0; i < n.Parent.Children.Count - 1; i++)
                 if(n.Id == n.Parent.Children[i].Id)
@@ -222,7 +250,7 @@ namespace SpazL
             //If you are here you are looking at the last guy in that branch
             if (n.Parent is DoSpaz)
                 return n.Parent;
-                
+
             return null;
         }
 

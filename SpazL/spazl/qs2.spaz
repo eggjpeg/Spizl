@@ -25,7 +25,7 @@ Sort(lint arr, int left, int right):
 spaz:
 	lint list
 	int i = 0
-	spad(list,3,2,8,6,9)
+	spad(list,1,2,3)
 	Sort(list,0,splen(list)-1)
 	dospaz i < splen(list)
 		sprint(list[i])

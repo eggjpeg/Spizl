@@ -1,0 +1,7 @@
+﻿spaz:
+	int a = 10
+	dospaz a < 20
+		a = a + 1
+		spif a > 15
+			spazout..
+	sprint(a).	

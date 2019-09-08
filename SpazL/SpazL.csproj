@@ -54,6 +54,7 @@
     <Compile Include="Parser\DoSpaz.cs" />
     <Compile Include="Parser\Node.cs" />
     <Compile Include="Parser\Parser.cs" />
+    <Compile Include="Parser\Spazout.cs" />
     <Compile Include="SpazL.cs" />
     <Compile Include="Parser\Spazdun.cs" />
     <Compile Include="Traversal\Squirrel.cs" />
@@ -69,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="spazl\qs2.spaz" />
     <None Include="spazl\Quicksort.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -89,6 +91,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="spazl\simplespaz.spaz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="spazl\spazout.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="spazl\str.spaz">

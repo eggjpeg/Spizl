@@ -131,17 +131,23 @@ namespace SpazL
                     parent.Add(s);
                     s.Parent = parent;
                 }
-                else if (HasOp(line, OpType.Oparen)) 
+                else if (line[0].Type == TokenType.Command && (CommandType)line[0].SubType == CommandType.Spazout)
                 {
-                    FunctionCall f = new FunctionCall(line);
-                    parent.Add(f);
-                    f.Parent = parent;
+                    Spazout s = new Spazout(GetRange(line, 1, line.Count - 1));
+                    parent.Add(s);
+                    s.Parent = parent;
                 }
-                else if(HasOp(line, OpType.Equal))
+                else if (HasOp(line, OpType.Equal)) //Check for assignment first
                 {
                     Assignment a = new Assignment(line);
                     parent.Add(a);
                     a.Parent = parent;
+                }
+                else if (HasOp(line, OpType.Oparen)) //Check for function call last
+                {
+                    FunctionCall f = new FunctionCall(line);
+                    parent.Add(f);
+                    f.Parent = parent;
                 }
                 else
                     throw new Exception("Unknown line. spaz.");

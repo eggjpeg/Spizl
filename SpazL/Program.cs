@@ -11,7 +11,7 @@ namespace SpazL
         static void Main(string[] args)
         {
             //SpazL.Run(args[0]);
-            string trace = SpazL.Run("spazl/Quicksort.spaz");
+            string trace = SpazL.Run("spazl/spazout.spaz");
 
             Console.ReadLine();
         }

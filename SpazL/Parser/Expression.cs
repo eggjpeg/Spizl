@@ -302,6 +302,11 @@ namespace SpazL
 
         private object EvalCustomFunc(AST ast, string funcName, List<object> argList, State state)
         {
+            if(funcName == "partition")
+            {
+                int dummy = 0;
+            }
+
             Squirrel sq = new Squirrel(ast, argList, funcName);
             return sq.Traverse();
         }
