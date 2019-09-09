@@ -231,7 +231,7 @@ namespace SpazL
                 p = p.Parent;
             
             spazoutInitiated = false;
-            return GetNextChild(p);
+            return GetNextChild(p);//its re-evaluating the dudes so spazout doesnt do anything
         }
 
         private Node GetNextChild(Node n)
