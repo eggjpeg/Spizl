@@ -201,7 +201,10 @@ namespace SpazL
             else if (node is DoSpaz)
             {
                 DoSpaz loop = (node as DoSpaz);
-                object r = loop.Exp.Eval(ast, State);
+
+                object r = true;
+                if(loop.Exp!=null)
+                    r = loop.Exp.Eval(ast, State);
                 if (!(r is bool))
                     throw new Exception("SPAZ dospaz must evaluate to bool SPAZ");
                 bool rb = (bool)r;
@@ -209,7 +212,7 @@ namespace SpazL
                 {
                     if (node.Children.Count == 0)
                         throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
-                    ret = Traverse(node.Children[0], false); 
+                    return Traverse(node.Children[0], false); 
                 }
                 else
                     conCompleted = false;

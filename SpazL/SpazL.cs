@@ -8,7 +8,15 @@ namespace SpazL
 {
     public class SpazL
     {
-        public static string Run(string file)
+        private string file;
+        public SpazL(string file)
+        {
+            this.file = file;
+        }
+
+        public string Result;
+
+        public void Run()
         {
             //Step 1. 
             Lexer l = new Lexer();
@@ -21,7 +29,7 @@ namespace SpazL
             //Step 3.
             Squirrel sq = new Squirrel(ast);
             sq.Traverse();
-            return sq.GetTrace();
+            this.Result = sq.GetTrace();
         }
     }
 }

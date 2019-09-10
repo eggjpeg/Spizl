@@ -25,11 +25,18 @@ namespace SpazL
 
         public DoSpaz(List<Token> e)
         {
-            Exp = new Expression(e);
+            if (e == null || e.Count == 0)
+                Exp = null;
+            else
+                Exp = new Expression(e);
+                
         }
         public override string GetInfo()
         {
-            return "DoSpaz " + Token.ToString(Exp.Exp);
+            if (Exp == null)
+                return "Infinite Spaz...";
+            else
+                return "DoSpaz " + Token.ToString(Exp.Exp);
         }
 
     }

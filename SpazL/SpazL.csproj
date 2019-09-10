@@ -70,6 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="spazl\infinite.spaz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="spazl\qs2.spaz" />
     <None Include="spazl\Quicksort.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
