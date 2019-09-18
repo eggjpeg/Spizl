@@ -202,13 +202,14 @@ namespace SpazL
             {
                 DoSpaz loop = (node as DoSpaz);
 
-                object r = true;
-                if(loop.Exp!=null)
-                    r = loop.Exp.Eval(ast, State);
-                if (!(r is bool))
-                    throw new Exception("SPAZ dospaz must evaluate to bool SPAZ");
-                bool rb = (bool)r;
-                if (rb)
+                bool r = true;
+
+                if (loop.Type == DoSpazType.While)
+                    r = (bool)loop.Exp.Eval(ast, State);
+                else if(loop.Type == DoSpazType.Foreach)
+                    r = Foreach(loop, r);
+
+                if (r)
                 {
                     if (node.Children.Count == 0)
                         throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
@@ -225,6 +226,46 @@ namespace SpazL
                 ret = Traverse(next, conCompleted);
 
             return ret;
+        }
+
+        private bool Foreach(DoSpaz loop, bool r)
+        {
+            //VarState vs = new VarState(d.VarName, d.Type, r);
+            //State.Add(vs.Name, vs);
+
+            VarState index;
+            VarState item;
+            //See if your index and variable name are in state
+            if (!State.ContainsKey(loop.ItemName))
+            {
+                index = new VarState(loop.ItemName + "_i", VarType.Int, 0);
+
+                if (!State.ContainsKey(loop.Collection))
+                    throw new Exception("spaz must have collection '" + loop.Collection + "' defined SPAZ");
+
+                if (State[loop.Collection].Type != VarType.Lint && State[loop.Collection].Type != VarType.Lstr)
+                    throw new Exception("spaz '" + loop.Collection + "' must be a collection SPAZ"); ;
+
+                List<object> list = (List<object>)State[loop.Collection].Value;
+                item = new VarState(loop.ItemName, loop.ItemType, list[0]);
+                State.Add(index.Name, index);
+                State.Add(item.Name, item);
+            }
+            else
+            {
+                //Grab the index and item from the state
+                item = State[loop.ItemName];
+                index = State[loop.ItemName + "_i"];
+                index.Value = (int)index.Value + 1;
+                List<object> list = (List<object>)State[loop.Collection].Value;
+
+                if (list.Count == (int)index.Value)
+                    r = false;
+                else
+                    item.Value = list[(int)index.Value];
+            }
+
+            return r;
         }
 
         private Node GetSpazoutNext(Node n)

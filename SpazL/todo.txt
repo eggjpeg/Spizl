@@ -1,3 +1,2 @@
-﻿1.  Add foreach(dospaz)
-2.Spazout levels
-3. Clean up 
+﻿1.Spazout levels
+2. Clean up 

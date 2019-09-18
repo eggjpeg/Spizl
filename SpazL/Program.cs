@@ -12,14 +12,8 @@ namespace SpazL
         static void Main(string[] args)
         {
             //SpazL.Run(args[0]);
-            SpazL spazl = new SpazL("spazl/infinite.spaz");
-
-            ThreadStart threadDelegate = new ThreadStart(spazl.Run);
-
-            Thread t = new Thread(threadDelegate, 100000000);
-            t.Start();
-
-            t.Join();
+            SpazL spazl = new SpazL("spazl/dospaz_simple.spaz");
+            spazl.Run();
 
             Console.ReadLine();
         }
