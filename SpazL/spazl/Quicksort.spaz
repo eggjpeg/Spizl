@@ -22,11 +22,13 @@ Sort(lint arr, int left, int right):
 		spif pivot + 1 < right
 			Sort(arr, pivot + 1, right)...
 
-spaz:
+spaz():
 	lint list
 	int i = 0
 	spad(list,3,2,8,6,9)
+	sprint('started sort')
 	Sort(list,0,splen(list)-1)
+	sprint('finished sort')
 	dospaz i < splen(list)
 		sprint(list[i])
 		i = i + 1..

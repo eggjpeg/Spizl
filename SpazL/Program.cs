@@ -12,7 +12,7 @@ namespace SpazL
         static void Main(string[] args)
         {
             //SpazL.Run(args[0]);
-            SpazL spazl = new SpazL("spazl/dospaz_simple.spaz");
+            SpazL spazl = new SpazL("spazl/spazdun.spaz");
             spazl.Run();
 
             Console.ReadLine();

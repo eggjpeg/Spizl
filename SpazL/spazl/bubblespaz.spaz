@@ -1,9 +1,13 @@
-﻿lint list
+﻿spaz:
+lint list
 spad(list,10,3,0,2,5,4,1, 98)
 int t = 0
 int p = 0
 int i = 0
 int a = 0
+
+
+
 dospaz p < splen(list) - 1
 	dospaz i < splen(list) - 1
 		spif list[i] > list[i+1]
@@ -14,6 +18,8 @@ dospaz p < splen(list) - 1
 	i = 0
 	p = p + 1.
 
+sprint(splen(list))
+
 dospaz a < splen(list)
 	sprint(list[a])
-	a = a + 1.
+	a = a + 1..

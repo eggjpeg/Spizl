@@ -46,9 +46,9 @@ namespace SpazL
         private void ValidateArgs(FunctionDef fd)
         {
             if (fd.Params.Count > argList.Count)
-                throw new Exception("SPAZ DOESNT HAVE ENOUGH ARGUMENTS");
+                throw new Exception("SPAZ DOESNT HAVE ENOUGH ARGUMENTS just like you dont have enough chromosomes");
             if (fd.Params.Count < argList.Count)
-                throw new Exception("SPAZ HAS TOO MANY ARGUMENTS");
+                throw new Exception("SPAZ HAS TOO MANY ARGUMENTS just like you have too many chromosomes");
             //for (int i = 0; i < fd.Params.Count; i++)
             //{
             //    if (fd.Params[i].Type != argList[i].Type)
@@ -77,155 +77,181 @@ namespace SpazL
         private bool swordOfKhali = false;
         private int spazoutLevel = 0;
         private bool spazoutInitiated = false;
-        private object ret = null;
-
+        
         private object Traverse(Node node, bool conCompleted)
         {
-            if (swordOfKhali)
-                return ret;
-            
-            if (node is FunctionDef)
-            {
-                FunctionDef fd = (node as FunctionDef);
-                ValidateArgs(fd);
-                AddArgsToState(fd);
+            object ret = null;
 
-                if (node.Children.Count == 0)
-                    throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
-                
-                return Traverse(node.Children[0], false);
-            }
-            else if (node is Spazdun)
-            {
-                if ((node as Spazdun).Exp == null)
-                    return null;
 
-                ret = (node as Spazdun).Exp.Eval(ast, State);
-                swordOfKhali = true;
-                return ret;
-            }
-            else if (node is Spazout)
+            while (true)
             {
-                spazoutInitiated = true;
-                if ((node as Spazout).Exp == null)
-                    return null;
+                bool emulateRec = false;
 
-                ret = (node as Spazout).Exp.Eval(ast, State);
-                return ret;
-            }
-            else if (node is FunctionCall)
-            {
-                (node as FunctionCall).Exp.Eval(ast, State);
-            }
-            else if (node is Declaration)
-            {
-                Declaration d = (node as Declaration);
+                if (swordOfKhali)
+                    return ret;
 
-                object r = null;
-                if (d.Exp !=null)
-                    r = d.Exp.Eval(ast, State);
-
-                VarState vs = new VarState(d.VarName, d.Type, r);
-                State.Add(vs.Name, vs);
-            }
-            else if (node is Assignment)
-            {
-                Assignment a = (node as Assignment);
-                object r = a.RightExpression.Eval(ast, State);
-                if (a.IsListIndexAssignment())
+                if (node is FunctionDef)
                 {
-                   
-                    object leftIndex = a.LeftIndexExpression.Eval(ast, State);
-                    int i = int.Parse(leftIndex.ToString());
-                    var list = (List<object>)State[a.VarName].Value;
-                    list[i] = r;
-                }
-                else
-                {
-                    State[a.VarName].Value = r;
-                }
+                    FunctionDef fd = (node as FunctionDef);
+                    ValidateArgs(fd);
+                    AddArgsToState(fd);
 
-            }
-            else if (node is Spif)
-            {
-                Spif spif = (node as Spif);
-                object r = spif.Exp.Eval(ast, State);
-                if (!(r is bool))
-                    throw new Exception("SPAZ spif must evaluate to bool SPAZ");
-                bool rb = (bool)r;
-                if (rb)
-                {
                     if (node.Children.Count == 0)
-                        throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS IF STATEMENT");
-                    ret = Traverse(node.Children[0], false);
-                    conCompleted = true;
-                }
-                else
+                        throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
+
+                    node = node.Children[0];
                     conCompleted = false;
-            }
-            else if(node is Spelzif)
-            {
-                Spelzif spelzIf = (node as Spelzif);
-                var prevSib = GetPrevChild(node);
-                if (!(prevSib is Spif || prevSib is Spelzif))
-                    throw new Exception("spaz cant have else if without previous spif or spelzif SPAZ");
-                if (!(conCompleted))
+                    emulateRec = true;
+                    //return Traverse(node.Children[0], false);
+                }
+                else if (node is Spazdun)
                 {
-                    object r = spelzIf.Exp.Eval(ast, State);
+                    if ((node as Spazdun).Exp == null)
+                        return null;
+
+                    ret = (node as Spazdun).Exp.Eval(ast, State);
+                    swordOfKhali = true;
+                    return ret;
+                }
+                else if (node is Spazout)
+                {
+                    spazoutInitiated = true;
+                    if ((node as Spazout).Exp == null)
+                        return null;
+
+                    ret = (node as Spazout).Exp.Eval(ast, State);
+                    return ret;
+                }
+                else if (node is FunctionCall)
+                {
+                    (node as FunctionCall).Exp.Eval(ast, State);
+                }
+                else if (node is Declaration)
+                {
+                    Declaration d = (node as Declaration);
+
+                    object r = null;
+                    if (d.Exp != null)
+                        r = d.Exp.Eval(ast, State);
+
+                    VarState vs = new VarState(d.VarName, d.Type, r);
+                    State.Add(vs.Name, vs);
+                }
+                else if (node is Assignment)
+                {
+                    Assignment a = (node as Assignment);
+                    object r = a.RightExpression.Eval(ast, State);
+                    if (a.IsListIndexAssignment())
+                    {
+
+                        object leftIndex = a.LeftIndexExpression.Eval(ast, State);
+                        int i = int.Parse(leftIndex.ToString());
+                        var list = (List<object>)State[a.VarName].Value;
+                        list[i] = r;
+                    }
+                    else
+                    {
+                        State[a.VarName].Value = r;
+                    }
+
+                }
+                else if (node is Spif)
+                {
+                    Spif spif = (node as Spif);
+                    object r = spif.Exp.Eval(ast, State);
                     if (!(r is bool))
-                        throw new Exception("SPAZ spelzif must evaluate to bool SPAZ");
+                        throw new Exception("SPAZ spif must evaluate to bool SPAZ");
                     bool rb = (bool)r;
                     if (rb)
                     {
                         if (node.Children.Count == 0)
-                            throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS SPELZIF STATEMENT");
-                        ret = Traverse(node.Children[0], false);
+                            throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS IF STATEMENT");
+                        // ret = Traverse(node.Children[0], false);
+                        node = node.Children[0];
                         conCompleted = true;
+                        emulateRec = true;
+                    }
+                    else
+                        conCompleted = false;
+                }
+                else if (node is Spelzif)
+                {
+                    Spelzif spelzIf = (node as Spelzif);
+                    var prevSib = GetPrevChild(node);
+                    if (!(prevSib is Spif || prevSib is Spelzif))
+                        throw new Exception("spaz cant have else if without previous spif or spelzif SPAZ");
+                    if (!(conCompleted))
+                    {
+                        object r = spelzIf.Exp.Eval(ast, State);
+                        if (!(r is bool))
+                            throw new Exception("SPAZ spelzif must evaluate to bool SPAZ");
+                        bool rb = (bool)r;
+                        if (rb)
+                        {
+                            if (node.Children.Count == 0)
+                                throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS SPELZIF STATEMENT");
+                            //ret = Traverse(node.Children[0], false);
+                            node = node.Children[0];
+                            conCompleted = true;
+                            emulateRec = true;
+                        }
                     }
                 }
-            }
-            else if(node is Spelz)
-            {
-                Spelz spelz = (node as Spelz);
-                var prevSib = GetPrevChild(node);
-                if (!(prevSib is Spif || prevSib is Spelzif))
-                    throw new Exception("spaz cant have spelz without previous spif or elseif SPAZ");
-                if (!(conCompleted))
+                else if (node is Spelz)
                 {
-                     if (node.Children.Count == 0)
+                    Spelz spelz = (node as Spelz);
+                    var prevSib = GetPrevChild(node);
+                    if (!(prevSib is Spif || prevSib is Spelzif))
+                        throw new Exception("spaz cant have spelz without previous spif or elseif SPAZ");
+                    if (!(conCompleted))
+                    {
+                        if (node.Children.Count == 0)
                             throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS SPELZ STATEMENT");
-                     ret = Traverse(node.Children[0], false);
-                    
+                        //  ret = Traverse(node.Children[0], false);
+                        node = node.Children[0];
+                        conCompleted = false;
+                        emulateRec = true;
+                    }
                 }
-            }
-            else if (node is DoSpaz)
-            {
-                DoSpaz loop = (node as DoSpaz);
-
-                bool r = true;
-
-                if (loop.Type == DoSpazType.While)
-                    r = (bool)loop.Exp.Eval(ast, State);
-                else if(loop.Type == DoSpazType.Foreach)
-                    r = Foreach(loop, r);
-
-                if (r)
+                else if (node is DoSpaz)
                 {
-                    if (node.Children.Count == 0)
-                        throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
-                    return Traverse(node.Children[0], false); 
+                    DoSpaz loop = (node as DoSpaz);
+
+                    bool r = true;
+
+                    if (loop.Type == DoSpazType.While)
+                        r = (bool)loop.Exp.Eval(ast, State);
+                    else if (loop.Type == DoSpazType.Foreach)
+                        r = Foreach(loop, r);
+
+                    if (r)
+                    {
+                        if (node.Children.Count == 0)
+                            throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
+                        // return Traverse(node.Children[0], false);
+                        node = node.Children[0];
+                        conCompleted = false;
+                        emulateRec = true;
+                    }
+                    else
+                        conCompleted = false;
                 }
-                else
-                    conCompleted = false;
+
+
+
+                //Regular execution
+                if(!emulateRec)
+                { 
+                    Node next = GetNextChild(node);
+                    if (next != null && !swordOfKhali)
+                    {
+                        //ret = Traverse(next, conCompleted);
+                        node = next; 
+                    }
+                    else
+                        return null;
+                }
             }
-
-
-            //Regular execution
-            Node next = GetNextChild(node);
-            if (next != null && !swordOfKhali)
-                ret = Traverse(next, conCompleted);
-
-            return ret;
         }
 
         private bool Foreach(DoSpaz loop, bool r)
@@ -294,8 +320,8 @@ namespace SpazL
             //If you are here you are looking at the last guy in that branch
             if (n.Parent is DoSpaz)
                 return n.Parent;
-
-            return null;
+            else
+                return GetNextChild(n.Parent);
         }
 
         private Node GetPrevChild(Node n)

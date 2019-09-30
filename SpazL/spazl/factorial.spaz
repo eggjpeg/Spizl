@@ -4,4 +4,4 @@
 	spazdun n * factorial(n - 1).
 
 spaz:
-	sprint(factorial(10)).
+	sprint(factorial(5)).

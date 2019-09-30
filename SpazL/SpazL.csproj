@@ -99,6 +99,9 @@
     <None Include="spazl\simplespaz.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="spazl\spazdun.spaz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="spazl\spazout.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

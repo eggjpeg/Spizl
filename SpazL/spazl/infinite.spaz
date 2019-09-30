@@ -1,7 +1,7 @@
 ﻿spaz:
 	int i = 0
 	dospaz
-		sprint('spaz')
-		spif i > 100000
+		spif i > 10000000
+			sprint(i)
 			spazout.
 		i = i + 1..
