@@ -244,7 +244,7 @@ namespace SpazL
                     throw new Exception("spaz must have collection '" + loop.Collection + "' defined SPAZ");
 
                 if (State[loop.Collection].Type != VarType.Lint && State[loop.Collection].Type != VarType.Lstr)
-                    throw new Exception("spaz '" + loop.Collection + "' must be a collection SPAZ"); ;
+                    throw new Exception("spaz '" + loop.Collection + "' must be a collection SPAZ"); 
 
                 List<object> list = (List<object>)State[loop.Collection].Value;
                 item = new VarState(loop.ItemName, loop.ItemType, list[0]);
