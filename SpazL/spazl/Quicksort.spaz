@@ -25,7 +25,7 @@ Sort(lint arr, int left, int right):
 spaz():
 	lint list
 	int i = 0
-	spad(list,3,2,8,6,9)
+	spad(list,3,2,8,6,9,9608,121,617,869,1121,618)
 	sprint('started sort')
 	Sort(list,0,splen(list)-1)
 	sprint('finished sort')

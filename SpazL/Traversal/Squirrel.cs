@@ -306,7 +306,7 @@ namespace SpazL
 
         private Node GetNextChild(Node n)
         {
-            if (n == null || n.Parent == null)
+            if (n == null || n.Parent == null || n.Parent is AST)
                 return null;
 
             if (spazoutInitiated)
