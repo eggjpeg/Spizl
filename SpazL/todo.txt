@@ -1,2 +1,5 @@
 ﻿1.Spazout levels
 2. Clean up 
+	a) con completed/ factory pattern
+	b) find parens/bracks
+	c) process parens/bracks

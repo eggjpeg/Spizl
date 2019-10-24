@@ -55,7 +55,7 @@ namespace SpazL
                 {
                     //Is there a return type?
                     if(nextGuy != null)
-                        this.ReturnType = (TokenType)nextGuy.Type;
+                        this.ReturnType = nextGuy.Type;
                     else
                         this.ReturnType = TokenType.Void;
                     break;
@@ -63,7 +63,7 @@ namespace SpazL
 
                 string name = nextGuy.Value;
                 //here we expect a var type and a name 
-                FunctionParam p = new FunctionParam((TokenType)thisGuy.Type, name);
+                FunctionParam p = new FunctionParam(thisGuy.Type, name);
                 Params.Add(p);
                 i++;
             }

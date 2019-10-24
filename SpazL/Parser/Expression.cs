@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace SpazL
 {
-
     class Expression
     {
         public List<Token> Exp { get; set; }

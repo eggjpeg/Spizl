@@ -15,9 +15,7 @@ namespace SpazL
             var lines = GetLines(tList);
             Print(lines);
             foreach (var item in lines)
-            {
                parent = ProcessLine(item, parent);    
-            }
             ast.PrintPretty(" ", true);
             return ast;
         }
@@ -27,10 +25,7 @@ namespace SpazL
             foreach (var item in list)
             {
                 foreach (var item2 in item)
-                {
                     Console.Write(item2.ToString());
-                    
-                }
                 Console.WriteLine();
             }
         }
