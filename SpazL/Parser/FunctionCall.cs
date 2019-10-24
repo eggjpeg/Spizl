@@ -13,8 +13,8 @@ namespace SpazL
     
         public FunctionCall(List<Token> e)
         {
-            if (e[0].Type == TokenType.Command)
-                this.Name = e[0].SubType.ToString();
+            if (e[0].IsCommand())
+                this.Name = e[0].Type.ToString();
             else
                 this.Name = e[0].Value;
 

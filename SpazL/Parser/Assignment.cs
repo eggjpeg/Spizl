@@ -23,7 +23,7 @@ namespace SpazL
         public Assignment(List<Token> exp)
         {
             Exp = new Expression(exp);
-            if (!(Exp.ExpTree.Token.Type == TokenType.Op && (OpType)Exp.ExpTree.Token.SubType == OpType.Equal))
+            if (!(Exp.ExpTree.Token.Type == TokenType.Equal))
                 throw new Exception("Not Assignment Spaz!");
 
             RightExpression = new Expression(Exp.ExpTree.ChildList[1]);

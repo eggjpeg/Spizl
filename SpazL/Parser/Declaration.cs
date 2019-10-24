@@ -8,10 +8,10 @@ namespace SpazL
 {
     class Declaration: Node
     {
-        public VarType Type { get; set; }
+        public TokenType Type { get; set; }
         public string VarName { get; set; }
         public Expression Exp { get; set; }
-        public Declaration(VarType type, string varName, List<Token> exp)
+        public Declaration(TokenType type, string varName, List<Token> exp)
         {
             Type = type;
             VarName = varName;

@@ -35,8 +35,8 @@ namespace SpazL
         public string FunctionName
         {
             get {
-                if (Token.Type == TokenType.Command)
-                    return Token.SubType.ToString();
+                if (Token.IsCommand())
+                    return Token.Type.ToString();
                 else if (Token.Type == TokenType.VarName)
                     return Token.Value;
                 else
@@ -44,9 +44,9 @@ namespace SpazL
             }
         }
 
-        public ExpNode(OpType op)
+        public ExpNode(TokenType type)
         {
-            this.Token = new Token(TokenType.Op, op);
+            this.Token = new Token(type);
         }
 
 

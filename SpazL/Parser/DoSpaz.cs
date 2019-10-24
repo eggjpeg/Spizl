@@ -36,7 +36,7 @@ namespace SpazL
 
         public DoSpazType Type { get; set; }
 
-        public VarType ItemType { get; set; }
+        public TokenType ItemType { get; set; }
         public string ItemName { get; set; }
         public string Collection { get; set; }
 
@@ -46,7 +46,7 @@ namespace SpazL
         private bool HasOp(List<Token> list)
         {
             foreach (var item in list)
-                if (item.Type == TokenType.Op)
+                if (item.IsOp())
                     return true;               
             return false;
         }
@@ -65,8 +65,8 @@ namespace SpazL
             }
             else if(e.Count == 3) //Type 3
             {
-                ItemType = (VarType)e[0].SubType;
-                if(!(ItemType == VarType.Int || ItemType == VarType.Str))
+                ItemType = e[0].Type;
+                if(!(ItemType == TokenType.Int || ItemType == TokenType.Str))
                     throw new Exception("SPAZ your dospaz variable has to be type int or string SPAZ");
                 ItemName = e[1].Value;
                 Collection = e[2].Value;

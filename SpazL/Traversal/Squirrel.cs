@@ -264,12 +264,12 @@ namespace SpazL
             //See if your index and variable name are in state
             if (!State.ContainsKey(loop.ItemName))
             {
-                index = new VarState(loop.ItemName + "_i", VarType.Int, 0);
+                index = new VarState(loop.ItemName + "_i", TokenType.Int, 0);
 
                 if (!State.ContainsKey(loop.Collection))
                     throw new Exception("spaz must have collection '" + loop.Collection + "' defined SPAZ");
 
-                if (State[loop.Collection].Type != VarType.Lint && State[loop.Collection].Type != VarType.Lstr)
+                if (State[loop.Collection].Type != TokenType.Lint && State[loop.Collection].Type != TokenType.Lstr)
                     throw new Exception("spaz '" + loop.Collection + "' must be a collection SPAZ"); 
 
                 List<object> list = (List<object>)State[loop.Collection].Value;

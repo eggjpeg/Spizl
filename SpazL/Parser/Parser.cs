@@ -53,10 +53,10 @@ namespace SpazL
             return r;
         }
 
-        private bool HasOp(List<Token> line, OpType op)
+        private bool HasOp(List<Token> line, TokenType type)
         {
             foreach (var item in line)
-                if (item.Type == TokenType.Op && (OpType)item.SubType == op)
+                if (item.Type == type)
                     return true;
             return false;
         }
@@ -79,71 +79,71 @@ namespace SpazL
             {
 
                 //TODO: suspicious use factory pattern to refactor this stuff.
-                if (HasOp(line, OpType.Colon))
+                if (HasOp(line, TokenType.Colon))
                 {
                     FunctionDef f = new FunctionDef(line);
                     parent.Add(f);
                     f.Parent = parent;
                     newParent = f;
                 }
-                else if (line[0].Type == TokenType.Type)
+                else if (line[0].IsType())
                 {
                     Declaration d;
                     if (line.Count == 2)
-                        d = new Declaration((VarType)line[0].SubType, line[1].Value, null);
+                        d = new Declaration(line[0].Type, line[1].Value, null);
                     else
-                        d = new Declaration((VarType)line[0].SubType, line[1].Value, line.GetRange(3, line.Count - 3));
+                        d = new Declaration(line[0].Type, line[1].Value, line.GetRange(3, line.Count - 3));
 
                     parent.Add(d);
                     d.Parent = parent;
                 }
-                else if(line[0].Type == TokenType.Command && (CommandType)line[0].SubType == CommandType.DoSpaz)
+                else if(line[0].Type == TokenType.DoSpaz)
                 {
                     DoSpaz l = new DoSpaz(GetRange(line, 1, line.Count - 1));
                     parent.Add(l);
                     l.Parent = parent;
                     newParent = l;
                 }
-                else if (line[0].Type == TokenType.Command && (CommandType)line[0].SubType == CommandType.Spif)
+                else if (line[0].Type == TokenType.Spif)
                 {
                     Spif s = new Spif(line.GetRange(1, line.Count - 1));
                     parent.Add(s);
                     s.Parent = parent;
                     newParent = s;
                 }
-                else if (line[0].Type == TokenType.Command && (CommandType)line[0].SubType == CommandType.Spelz)
+                else if (line[0].Type == TokenType.Spelz)
                 {
                     Spelz s = new Spelz();
                     parent.Add(s);
                     s.Parent = parent;
                     newParent = s;
                 }
-                else if (line[0].Type == TokenType.Command && (CommandType)line[0].SubType == CommandType.Spelzif)
+                else if (line[0].Type == TokenType.Spelzif)
                 {
                     Spelzif s = new Spelzif(line.GetRange(1, line.Count - 1));
                     parent.Add(s);
                     s.Parent = parent;
                     newParent = s;
                 }
-                else if (line[0].Type == TokenType.Command && (CommandType)line[0].SubType == CommandType.Spazdun)
+                else if (line[0].Type == TokenType.Spazdun)
                 {
                     Spazdun s = new Spazdun(GetRange(line, 1, line.Count - 1));
                     parent.Add(s);
                     s.Parent = parent;
                 }
-                else if (line[0].Type == TokenType.Command && (CommandType)line[0].SubType == CommandType.Spazout)
+                else if (line[0].Type == TokenType.Spazout)
                 {
                     Spazout s = new Spazout(GetRange(line, 1, line.Count - 1));
                     parent.Add(s);
                     s.Parent = parent;
                 }
-                else if (HasOp(line, OpType.Equal)) //Check for assignment first
+                else if (HasOp(line, TokenType.Equal)) //Check for assignment first
                 {
                     Assignment a = new Assignment(line);
                     parent.Add(a);
                     a.Parent = parent;
                 }
-                else if (HasOp(line, OpType.Oparen)) //Check for function call last
+                else if (HasOp(line, TokenType.Oparen)) //Check for function call last
                 {
                     FunctionCall f = new FunctionCall(line);
                     parent.Add(f);

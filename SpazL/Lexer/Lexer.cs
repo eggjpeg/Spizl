@@ -28,15 +28,15 @@ namespace SpazL
             for (int i = 0; i < list.Count; i++)
             {
                 bool isDefault = false;
-                if (list.Count-1>i && list[i].SubType != null && list[i+1].SubType != null)
+                if (list.Count-1>i)
                 {
-                    if (list[i].Type == TokenType.Op && list[i + 1].Type == TokenType.Op && (OpType)list[i + 1].SubType == OpType.Equal)
+                    if (list[i].IsOp() && list[i + 1].Type == TokenType.Equal)
                     {
-                        switch ((OpType)list[i].SubType)
+                        switch (list[i].Type)
                         {
-                            case OpType.Lessthan: nlist.Add(new Token(TokenType.Op, OpType.LessThanEq)); break;
-                            case OpType.Morethan: nlist.Add(new Token(TokenType.Op, OpType.MoreThanEq)); break;
-                            case OpType.Not: nlist.Add(new Token(TokenType.Op, OpType.NotEq)); break;
+                            case TokenType.Lessthan: nlist.Add(new Token(TokenType.LessThanEq)); break;
+                            case TokenType.Morethan: nlist.Add(new Token(TokenType.MoreThanEq)); break;
+                            case TokenType.Not: nlist.Add(new Token(TokenType.NotEq)); break;
                             default: isDefault = true; break;
                         }
 
@@ -134,7 +134,7 @@ namespace SpazL
             return false;
         }
 
-        //TODO: Fix when dealing with quotes
+        //TODO: Fix when dealing with quotes suspicious
         private string SpaceOut(string line)
         {
             StringBuilder sb = new StringBuilder();
@@ -161,35 +161,35 @@ namespace SpazL
             
             switch (item)
             {
-                case "spif": return new Token(TokenType.Command, CommandType.Spif);
-                case "spelz": return new Token(TokenType.Command, CommandType.Spelz);
-                case "spelzif": return new Token(TokenType.Command, CommandType.Spelzif);
-                case "spazout": return new Token(TokenType.Command, CommandType.Spazout);
-                case "spazdun": return new Token(TokenType.Command, CommandType.Spazdun);
-                case "dospaz": return new Token(TokenType.Command, CommandType.DoSpaz);
-                case "sprint": return new Token(TokenType.Command, CommandType.Sprint);
-                case "/": return new Token(TokenType.Op, OpType.Divide);
-                case "*": return new Token(TokenType.Op, OpType.Multiply);
-                case "+": return new Token(TokenType.Op, OpType.Plus);
-                case "-": return new Token(TokenType.Op, OpType.Minus);
-                case "!": return new Token(TokenType.Op, OpType.Not);
-                case "=": return new Token(TokenType.Op, OpType.Equal);
-                case "%": return new Token(TokenType.Op, OpType.Mod);
-                case ">": return new Token(TokenType.Op, OpType.Morethan);
-                case "<": return new Token(TokenType.Op, OpType.Lessthan);
-                case "int": return new Token(TokenType.Type, VarType.Int);
-                case "str": return new Token(TokenType.Type, VarType.Str);
-                case "lint": return new Token(TokenType.Type, VarType.Lint);
-                case "lstr": return new Token(TokenType.Type, VarType.Lstr);
+                case "spif": return new Token(TokenType.Spif);
+                case "spelz": return new Token(TokenType.Spelz);
+                case "spelzif": return new Token(TokenType.Spelzif);
+                case "spazout": return new Token(TokenType.Spazout);
+                case "spazdun": return new Token(TokenType.Spazdun);
+                case "dospaz": return new Token(TokenType.DoSpaz);
+                case "sprint": return new Token(TokenType.Sprint);
+                case "/": return new Token(TokenType.Divide);
+                case "*": return new Token(TokenType.Multiply);
+                case "+": return new Token(TokenType.Plus);
+                case "-": return new Token(TokenType.Minus);
+                case "!": return new Token(TokenType.Not);
+                case "=": return new Token(TokenType.Equal);
+                case "%": return new Token(TokenType.Mod);
+                case ">": return new Token(TokenType.Morethan);
+                case "<": return new Token(TokenType.Lessthan);
+                case "int": return new Token(TokenType.Int);
+                case "str": return new Token(TokenType.Str);
+                case "lint": return new Token(TokenType.Lint);
+                case "lstr": return new Token(TokenType.Lstr);
                 case "\n": return new Token(TokenType.Eol);
                 case ".": return new Token(TokenType.Dot);
-                case "(": return new Token(TokenType.Op, OpType.Oparen);
-                case ")": return new Token(TokenType.Op, OpType.Cparen);
-                case "[": return new Token(TokenType.Op, OpType.Obrack);
-                case "]": return new Token(TokenType.Op, OpType.Cbrack);
-                case ",": return new Token(TokenType.Op, OpType.Comma);
-                case "'": return new Token(TokenType.Op, OpType.Squote);
-                case ":": return new Token(TokenType.Op, OpType.Colon);
+                case "(": return new Token(TokenType.Oparen);
+                case ")": return new Token(TokenType.Cparen);
+                case "[": return new Token(TokenType.Obrack);
+                case "]": return new Token(TokenType.Cbrack);
+                case ",": return new Token(TokenType.Comma);
+                case "'": return new Token(TokenType.Squote);
+                case ":": return new Token(TokenType.Colon);
                 default: break;
             }
 

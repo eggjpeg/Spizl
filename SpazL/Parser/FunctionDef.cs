@@ -9,10 +9,10 @@ namespace SpazL
 
     class FunctionParam
     {
-        public VarType Type { get; }
+        public TokenType Type { get; }
         public string Name { get;}
 
-        public FunctionParam(VarType type, string name)
+        public FunctionParam(TokenType type, string name)
         {
             this.Name = name;
             this.Type = type;
@@ -30,7 +30,7 @@ namespace SpazL
     {
         public string Name { get;}
         public List<FunctionParam> Params { get;}
-        public VarType ReturnType { get; }
+        public TokenType ReturnType { get; }
 
 
 
@@ -47,22 +47,22 @@ namespace SpazL
                 Token nextGuy = expList.Count > i + 1 ? expList[i + 1]: null;
 
                 //farm parens
-                if (thisGuy.Type == TokenType.Op && ((OpType)thisGuy.SubType == OpType.Oparen || (OpType)thisGuy.SubType == OpType.Cparen || (OpType)thisGuy.SubType == OpType.Comma))
+                if (thisGuy.Type == TokenType.Oparen || thisGuy.Type == TokenType.Cparen || thisGuy.Type == TokenType.Comma)
                     continue;
                 //If you hit a colon, then check for return type
-                if (thisGuy.Type == TokenType.Op && (OpType)thisGuy.SubType == OpType.Colon)
+                if (thisGuy.Type == TokenType.Colon)
                 {
                     //Is there a return type?
                     if(nextGuy != null)
-                        this.ReturnType = (VarType)nextGuy.SubType;
+                        this.ReturnType = (TokenType)nextGuy.Type;
                     else
-                        this.ReturnType = VarType.Void;
+                        this.ReturnType = TokenType.Void;
                     break;
                 }
 
                 string name = nextGuy.Value;
                 //here we expect a var type and a name 
-                FunctionParam p = new FunctionParam((VarType)thisGuy.SubType, name);
+                FunctionParam p = new FunctionParam((TokenType)thisGuy.Type, name);
                 Params.Add(p);
                 i++;
             }

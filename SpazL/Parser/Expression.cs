@@ -42,7 +42,7 @@ namespace SpazL
         {
             //If the previous ExpNode is a VarName, assume it's a function
             if(startParenIndex > 0)
-                if (list[startParenIndex - 1].Token.Type == TokenType.VarName || list[startParenIndex - 1].Token.Type == TokenType.Command)
+                if (list[startParenIndex - 1].Token.Type == TokenType.VarName || list[startParenIndex - 1].Token.IsCommand())
                     return true;
             return false;
         }
@@ -66,14 +66,11 @@ namespace SpazL
             List<ExpNode> curList = new List<ExpNode>();
             foreach (ExpNode node in list)
             {
-                if (node.Token.Type == TokenType.Op)
+                if (node.Token.Type == TokenType.Comma)
                 {
-                    if ((OpType)node.Token.SubType == OpType.Comma)
-                    {
-                        rlist.Add(curList);
-                        curList = new List<ExpNode>();
-                        continue;
-                    }
+                    rlist.Add(curList);
+                    curList = new List<ExpNode>();
+                    continue;
                 }
                 curList.Add(node);
             }
@@ -168,20 +165,20 @@ namespace SpazL
                 return list;
 
 
-            if (HasOpType(list, OpType.Oparen))
+            if (HasOpType(list, TokenType.Oparen))
                 return ProcessParens(list);
 
-            if (HasOpType(list, OpType.Obrack))
+            if (HasOpType(list, TokenType.Obrack))
                 return ProcessBracks(list);
 
 
-            var orderList = new List<List<OpType>>();
-            orderList.Add(new List<OpType> { OpType.Multiply, OpType.Divide, OpType.Mod });
-            orderList.Add(new List<OpType> { OpType.Plus, OpType.Minus });
-            orderList.Add(new List<OpType> { OpType.LessThanEq, OpType.Lessthan, OpType.Morethan, OpType.MoreThanEq });
-            orderList.Add(new List<OpType> { OpType.Equal, OpType.NotEq });
+            var orderList = new List<List<TokenType>>();
+            orderList.Add(new List<TokenType> { TokenType.Multiply, TokenType.Divide, TokenType.Mod });
+            orderList.Add(new List<TokenType> { TokenType.Plus, TokenType.Minus });
+            orderList.Add(new List<TokenType> { TokenType.LessThanEq, TokenType.Lessthan, TokenType.Morethan, TokenType.MoreThanEq });
+            orderList.Add(new List<TokenType> { TokenType.Equal, TokenType.NotEq });
 
-            foreach (List<OpType> opSet in orderList)
+            foreach (List<TokenType> opSet in orderList)
             {
                 int smallestIndex = FindIndexOfFirstOp(list, opSet);
                 if (smallestIndex > -1)
@@ -197,60 +194,54 @@ namespace SpazL
 
 
 
-        private int IndexOfO(List<ExpNode> list, OpType oToken)
+        private int IndexOfO(List<ExpNode> list, TokenType type)
         {
             for (int i = list.Count - 1; i >= 0; i--)
-                if (list[i].Token.SubType is OpType)
-                    if ((OpType)list[i].Token.SubType == oToken)
+                if (list[i].Token.Type == type)
                         return i;
             throw new Exception("Could not find Opening Op. spz.");
         }
 
-        private int IndexOfC(List<ExpNode> list, int oIndex, OpType cToken)
+        private int IndexOfC(List<ExpNode> list, int oIndex, TokenType type)
         {
             for (int i = oIndex; i < list.Count; i++)
-                if (list[i].Token.SubType is OpType)
-                    if ((OpType)list[i].Token.SubType == cToken)
-                        return i;
+                if (list[i].Token.Type == type)
+                    return i;
             throw new Exception("Could not find Closing Op. spz.");
         }
 
         public Tuple<int, int> FindInnerPars(List<ExpNode> list)
         {
-            int i1 = IndexOfO(list,OpType.Oparen);
-            int i2 = IndexOfC(list, i1, OpType.Cparen);
+            int i1 = IndexOfO(list,TokenType.Oparen);
+            int i2 = IndexOfC(list, i1, TokenType.Cparen);
             return new Tuple<int, int>(i1, i2);
         }
 
         public Tuple<int, int> FindInnerBrackets(List<ExpNode> list)
         {
-            int i1 = IndexOfO(list, OpType.Obrack);
-            int i2 = IndexOfC(list, i1, OpType.Cbrack);
+            int i1 = IndexOfO(list, TokenType.Obrack);
+            int i2 = IndexOfC(list, i1, TokenType.Cbrack);
             return new Tuple<int, int>(i1, i2);
         }
 
 
 
-        private bool HasOpType(List<ExpNode> list, OpType opType )
+        private bool HasOpType(List<ExpNode> list, TokenType type )
         {
             foreach (ExpNode node in list)
-            {
-                if (node.Token.SubType is OpType)
-                    if ((OpType)node.Token.SubType == opType)
-                        return true;
-            }
+                if (node.Token.Type == type)
+                    return true;
             return false;
         }
 
-        private int FindIndexOfFirstOp(List<ExpNode> list, List<OpType> ops)
+        private int FindIndexOfFirstOp(List<ExpNode> list, List<TokenType> ops)
         {
             for (int i = 0; i < list.Count; i++)
             {
                 ExpNode node = list[i];
                 if (node.IsLeaf())
-                    foreach (OpType op in ops)
-                        if (node.Token.SubType is OpType)
-                            if ((OpType)node.Token.SubType == op)
+                    foreach (TokenType op in ops)
+                            if (node.Token.Type == op)
                                 return i;
             }
             return -1;
@@ -302,11 +293,6 @@ namespace SpazL
 
         private object EvalCustomFunc(AST ast, string funcName, List<object> argList, State state)
         {
-            if(funcName == "partition")
-            {
-                int dummy = 0;
-            }
-
             Squirrel sq = new Squirrel(ast, argList, funcName);
             return sq.Traverse();
         }
@@ -380,10 +366,10 @@ namespace SpazL
 
 
             //Sanity check                                                                                       
-            if (n.Token.Type != TokenType.Op)
+            if (!n.Token.IsOp())
                 throw new Exception("Op Type expected.. spaz.");
 
-            OpType op = (OpType)n.Token.SubType;
+            TokenType op = n.Token.Type;
 
             
             object lValue = Eval(ast, n.ChildList[0], state, valueDict);
@@ -396,47 +382,47 @@ namespace SpazL
 
             switch (op)
             {
-                case OpType.Plus:
+                case TokenType.Plus:
                     v = ToInt(lValue) + ToInt(rValue);
                     SetValue(valueDict, n, v);
                     return v;
-                case OpType.Minus:
+                case TokenType.Minus:
                     v = ToInt(lValue) - ToInt(rValue);
                     SetValue(valueDict, n, v);
                     return v;
-                case OpType.Divide:
+                case TokenType.Divide:
                     v = ToInt(lValue) / ToInt(rValue);
                     SetValue(valueDict, n, v);
                     return v;
-                case OpType.Multiply:
+                case TokenType.Multiply:
                     v = ToInt(lValue) * ToInt(rValue);
                     SetValue(valueDict, n, v);
                     return v;
-                case OpType.Mod:
+                case TokenType.Mod:
                     v = ToInt(lValue) % ToInt(rValue);
                     SetValue(valueDict, n, v);
                     return v;
-                case OpType.Equal:
+                case TokenType.Equal:
                     v = ToString(lValue) == ToString(rValue);
                     SetValue(valueDict, n, v);
                     return v;
-                case OpType.NotEq:
+                case TokenType.NotEq:
                     v = ToString(lValue) != ToString(rValue);
                     SetValue(valueDict, n, v);
                     return v;
-                case OpType.Lessthan:
+                case TokenType.Lessthan:
                     v = ToInt(lValue) < ToInt(rValue);
                     SetValue(valueDict, n, v);
                     return v;
-                case OpType.LessThanEq:
+                case TokenType.LessThanEq:
                     v = ToInt(lValue) <= ToInt(rValue);
                     SetValue(valueDict, n, v);
                     return v;
-                case OpType.Morethan:
+                case TokenType.Morethan:
                     v = ToInt(lValue) > ToInt(rValue);
                     SetValue(valueDict, n, v);
                     return v;
-                case OpType.MoreThanEq:
+                case TokenType.MoreThanEq:
                     v = ToInt(lValue) >= ToInt(rValue);
                     SetValue(valueDict, n, v);
                     return v;
