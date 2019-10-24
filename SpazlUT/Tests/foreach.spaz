@@ -1,0 +1,8 @@
+﻿spaz:
+lint list
+spad(list,5,6,7,8)
+dospaz int s list
+	spif s = 8
+		dospaz int a list
+			sprint(a).
+		sprint(s)...

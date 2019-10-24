@@ -1,12 +1,13 @@
-﻿str s = 'spz'
-str a
-int acc = 0
-lstr ls
-spad(ls,'ass','spaz')
-a=spat(s,'1','2','3')
+﻿spaz:
+	str s = 'spz'
+	str a
+	int acc = 0
+	lstr ls
+	spad(ls,'ass','spaz')
+	a=spat(s,'1','2','3')
 
-dospaz acc < splen(ls)
-	a = spat(a,ls[acc])
-	acc = acc + 1.
+	dospaz acc < splen(ls)
+		a = spat(a,ls[acc])
+		acc = acc + 1.
 
-sprint(a)
+	sprint(a).

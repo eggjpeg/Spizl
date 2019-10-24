@@ -14,6 +14,7 @@ namespace SpazL
         public State()
         {
             this.Trace = new StringBuilder();
+            IsTrace = true;
         }
     }
 }

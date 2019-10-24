@@ -12,7 +12,7 @@ namespace SpazL
         static void Main(string[] args)
         {
             //SpazL.Run(args[0]);
-            SpazL spazl = new SpazL("spazl/Quicksort.spaz");
+            SpazL spazl = new SpazL("spazl/foreach.spaz");
             spazl.Run();
 
             Console.ReadLine();

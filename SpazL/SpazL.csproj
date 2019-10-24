@@ -73,6 +73,9 @@
     <None Include="spazl\dospaz_simple.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="spazl\foreach.spaz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="spazl\infinite.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

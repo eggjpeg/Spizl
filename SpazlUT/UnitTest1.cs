@@ -14,17 +14,59 @@ namespace SpazlUT
         [TestMethod]
         public void Bubble()
         {
-            string actual = FS(SpazL.SpazL.Run("Tests/bubble.spaz"));
+            SpazL.SpazL spaz = new SpazL.SpazL("Tests/bubble.spaz");
+            spaz.Run();
+
             string expected = "0123451098";
-            Assert.AreEqual(expected, actual, "Bubble failed. spaz.");
+            Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
         }
 
         [TestMethod]
         public void String()
         {
-            string actual = FS(SpazL.SpazL.Run("Tests/string.spaz"));
+            SpazL.SpazL spaz = new SpazL.SpazL("Tests/string.spaz");
+            spaz.Run();
             string expected = "spz123assspaz";
-            Assert.AreEqual(expected, actual, "String failed. spaz.");
+            Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
         }
+        //2368912161761886911219608
+        [TestMethod]
+        public void QuickSort()
+        {
+            SpazL.SpazL spaz = new SpazL.SpazL("Tests/QuickSort.spaz");
+            spaz.Run();
+            string expected = "2368912161761886911219608";
+            Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
+        }
+        [TestMethod]
+
+        public void Factorial()
+        {
+            SpazL.SpazL spaz = new SpazL.SpazL("Tests/factorial.spaz");
+            spaz.Run();
+            string expected = "3628800";
+            Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
+        }
+
+        [TestMethod]
+
+        public void Foreach()
+        {
+            SpazL.SpazL spaz = new SpazL.SpazL("Tests/foreach.spaz");
+            spaz.Run();
+            string expected = "56788";
+            Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
+        }
+
+        [TestMethod]
+
+        public void Spazout()
+        {
+            SpazL.SpazL spaz = new SpazL.SpazL("Tests/spazout.spaz");
+            spaz.Run();
+            string expected = "16";
+            Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
+        }
+
     }
 }
