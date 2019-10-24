@@ -69,94 +69,52 @@ namespace SpazL
                 return null;
         }
 
+
+        public Node CreateNode(List<Token> line, Node parent)
+        {
+            if (HasOp(line, TokenType.Colon))
+                return new FunctionDef(line);
+            else if (line[0].IsType())
+                if (line.Count == 2)
+                    return new Declaration(line[0].Type, line[1].Value, null);
+                else
+                    return new Declaration(line[0].Type, line[1].Value, line.GetRange(3, line.Count - 3));
+            else if (line[0].Type == TokenType.DoSpaz)
+                return new DoSpaz(GetRange(line, 1, line.Count - 1));
+            else if (line[0].Type == TokenType.Spif)
+                return new Spif(line.GetRange(1, line.Count - 1));
+            else if (line[0].Type == TokenType.Spelz)
+                return new Spelz();
+            else if (line[0].Type == TokenType.Spelzif)
+                return new Spelzif(line.GetRange(1, line.Count - 1));
+            else if (line[0].Type == TokenType.Spazdun)
+                return new Spazdun(GetRange(line, 1, line.Count - 1));
+            else if (line[0].Type == TokenType.Spazout)
+                return new Spazout(GetRange(line, 1, line.Count - 1));
+            else if (HasOp(line, TokenType.Equal)) 
+                return new Assignment(line);
+            else if (HasOp(line, TokenType.Oparen)) 
+                return new FunctionCall(line);
+            else
+                throw new Exception("Unknown line. spaz.");
+        }
+
         public Node ProcessLine(List<Token> line, Node parent)
         {
             
             int kd = KillDots(line);
             Node newParent = parent;
 
-            if(line.Count > 0) 
+            if (line.Count > 0)
             {
-
-                //TODO: suspicious use factory pattern to refactor this stuff.
-                if (HasOp(line, TokenType.Colon))
-                {
-                    FunctionDef f = new FunctionDef(line);
-                    parent.Add(f);
-                    f.Parent = parent;
-                    newParent = f;
-                }
-                else if (line[0].IsType())
-                {
-                    Declaration d;
-                    if (line.Count == 2)
-                        d = new Declaration(line[0].Type, line[1].Value, null);
-                    else
-                        d = new Declaration(line[0].Type, line[1].Value, line.GetRange(3, line.Count - 3));
-
-                    parent.Add(d);
-                    d.Parent = parent;
-                }
-                else if(line[0].Type == TokenType.DoSpaz)
-                {
-                    DoSpaz l = new DoSpaz(GetRange(line, 1, line.Count - 1));
-                    parent.Add(l);
-                    l.Parent = parent;
-                    newParent = l;
-                }
-                else if (line[0].Type == TokenType.Spif)
-                {
-                    Spif s = new Spif(line.GetRange(1, line.Count - 1));
-                    parent.Add(s);
-                    s.Parent = parent;
-                    newParent = s;
-                }
-                else if (line[0].Type == TokenType.Spelz)
-                {
-                    Spelz s = new Spelz();
-                    parent.Add(s);
-                    s.Parent = parent;
-                    newParent = s;
-                }
-                else if (line[0].Type == TokenType.Spelzif)
-                {
-                    Spelzif s = new Spelzif(line.GetRange(1, line.Count - 1));
-                    parent.Add(s);
-                    s.Parent = parent;
-                    newParent = s;
-                }
-                else if (line[0].Type == TokenType.Spazdun)
-                {
-                    Spazdun s = new Spazdun(GetRange(line, 1, line.Count - 1));
-                    parent.Add(s);
-                    s.Parent = parent;
-                }
-                else if (line[0].Type == TokenType.Spazout)
-                {
-                    Spazout s = new Spazout(GetRange(line, 1, line.Count - 1));
-                    parent.Add(s);
-                    s.Parent = parent;
-                }
-                else if (HasOp(line, TokenType.Equal)) //Check for assignment first
-                {
-                    Assignment a = new Assignment(line);
-                    parent.Add(a);
-                    a.Parent = parent;
-                }
-                else if (HasOp(line, TokenType.Oparen)) //Check for function call last
-                {
-                    FunctionCall f = new FunctionCall(line);
-                    parent.Add(f);
-                    f.Parent = parent;
-                }
-                else
-                    throw new Exception("Unknown line. spaz.");
+                Node n = CreateNode(line, parent);
+                parent.Add(n);
+                n.Parent = parent;
+                if (n.SetNewParent)
+                    newParent = n;
             }
-
-
             for (int i = 0; i < kd; i++)
                 newParent = newParent.Parent;
-
             return newParent;
         }
 

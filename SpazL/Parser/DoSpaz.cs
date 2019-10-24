@@ -53,6 +53,7 @@ namespace SpazL
 
         public DoSpaz(List<Token> e)
         {
+            this.SetNewParent = true;
             if (e == null || e.Count == 0) // Type 1
             {
                 Exp = null;

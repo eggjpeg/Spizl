@@ -8,6 +8,10 @@ namespace SpazL
 {
     class Spelz:Node
     {
+        public Spelz()
+        {
+            this.SetNewParent = true;
+        }
         public override string GetInfo()
         {
             return "Spelz";

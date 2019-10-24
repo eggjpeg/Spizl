@@ -16,7 +16,6 @@ namespace SpazL
         {
             Name = name;
             Type = type;
-            //Suspicious smell
             if ((type == TokenType.Lint || type == TokenType.Lstr) && value == null)
                 Value = new List<object>();
             else

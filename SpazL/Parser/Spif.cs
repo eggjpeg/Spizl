@@ -12,6 +12,7 @@ namespace SpazL
 
         public Spif(List<Token> e)
         {
+            this.SetNewParent = true;
             Exp = new Expression(e);
         }
         public override string GetInfo()

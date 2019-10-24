@@ -37,6 +37,7 @@ namespace SpazL
 
         public FunctionDef(List<Token> expList)
         {
+            this.SetNewParent = true;
             this.Name = expList[0].Value;
             this.Params = new List<FunctionParam>();
 

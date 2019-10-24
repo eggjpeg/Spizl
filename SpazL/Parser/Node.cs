@@ -9,6 +9,8 @@ namespace SpazL
     abstract class Node
     {
         public Node Parent;
+        public bool SetNewParent;
+
 
         private Guid id = Guid.NewGuid();
 
