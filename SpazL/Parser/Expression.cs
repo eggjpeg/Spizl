@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace SpazL
 {
+    enum ProcessType
+    {
+        Brackets,
+        Parens
+    }
     class Expression
     {
         public List<Token> Exp { get; set; }
@@ -34,28 +39,19 @@ namespace SpazL
 
             return r[0];
         }
-
-
-
-        private bool IsFunction(int startParenIndex, List<ExpNode> list)
+        private bool IsFuncOrList(int startIndex, List<ExpNode> list, ProcessType type)
         {
             //If the previous ExpNode is a VarName, assume it's a function
-            if(startParenIndex > 0)
-                if (list[startParenIndex - 1].Token.Type == TokenType.VarName || list[startParenIndex - 1].Token.IsCommand())
+
+            if (startIndex > 0)
+            {
+                if (type == ProcessType.Parens && list[startIndex - 1].Token.Type == TokenType.VarName || list[startIndex - 1].Token.IsCommand())
                     return true;
+                if (type == ProcessType.Brackets && list[startIndex - 1].Token.Type == TokenType.VarName)
+                    return true;
+            }
             return false;
         }
-
-        private bool IsList(int startBrackIndex, List<ExpNode> list)
-        {
-            //If the previous ExpNode is a VarName, assume it's a list
-            if (startBrackIndex > 0)
-                if (list[startBrackIndex - 1].Token.Type == TokenType.VarName)
-                    return true;
-            return false;
-        }
-
-
         private List<List<ExpNode>> SplitFuncArguments(List<ExpNode> list)
         {
             List<List<ExpNode>> rlist = new List<List<ExpNode>>();
@@ -90,30 +86,38 @@ namespace SpazL
             }
             return innerList;
         }
-
-
-
-        private List<ExpNode> ProcessParens(List<ExpNode> list)
+        private List<ExpNode> Process(List<ExpNode> list, ProcessType type)
         {
             //Parens
-            var bi = FindInnerPars(list);
+            TokenType oToken = type == ProcessType.Brackets ? TokenType.Obrack : TokenType.Oparen;
+            TokenType cToken = type == ProcessType.Brackets ? TokenType.Cbrack : TokenType.Cparen;
+            var bi = FindInner(list, oToken, cToken);
             var innerList = CreateInnerList(list, bi);
 
-            if (IsFunction(bi.Item1, list))
+            if (IsFuncOrList(bi.Item1, list, type))
             {
-                ExpNode fNode = list[bi.Item1 - 1];
-                fNode.IsFunction = true;
-                
-                List<List<ExpNode>> arglist = SplitFuncArguments(innerList);
-
-                foreach (List<ExpNode> arg in arglist)
+                ExpNode node = list[bi.Item1 - 1];
+                if(type == ProcessType.Parens)
                 {
-                    List<ExpNode> argResult = BuildTree(arg);
-                    if (argResult.Count > 1)
-                        throw new Exception("Function Argument must resolve to a single ExpNode. spaz.");
-                    fNode.AddChild(argResult[0]);
+                    node.IsFunction = true;
+                    List<List<ExpNode>> arglist = SplitFuncArguments(innerList);
+
+                    foreach (List<ExpNode> arg in arglist)
+                    {
+                        List<ExpNode> argResult = BuildTree(arg);
+                        if (argResult.Count > 1)
+                            throw new Exception("Function Argument must resolve to a single ExpNode. spaz.");
+                        node.AddChild(argResult[0]);
+                    }
                 }
-
+                else
+                {
+                    node.IsListIndex = true;
+                    List<ExpNode> indexResult = BuildTree(innerList);
+                    if (indexResult.Count > 1)
+                        throw new Exception("List Index must resolve to a single ExpNode. spaz.");
+                    node.AddChild(indexResult[0]);
+                }
                 list.RemoveRange(bi.Item1, bi.Item2 - bi.Item1 + 1);
                 return BuildTree(list);
             }
@@ -124,40 +128,7 @@ namespace SpazL
                 list.InsertRange(bi.Item1, ls);
                 return BuildTree(list);
             }
-        
         }
-
-
-        private List<ExpNode> ProcessBracks(List<ExpNode> list)
-        {
-            //Parens
-            var bi = FindInnerBrackets(list);
-            var innerList = CreateInnerList(list, bi);
-
-            if (IsList(bi.Item1, list))
-            {
-                ExpNode lNode = list[bi.Item1 - 1];
-                lNode.IsListIndex = true;
-                
-                List<ExpNode> indexResult = BuildTree(innerList);
-                if (indexResult.Count > 1)
-                    throw new Exception("List Index must resolve to a single ExpNode. spaz.");
-                lNode.AddChild(indexResult[0]);
-                
-                list.RemoveRange(bi.Item1, bi.Item2 - bi.Item1 + 1);
-                return BuildTree(list);
-            }
-            else
-            {
-                list.RemoveRange(bi.Item1, bi.Item2 - bi.Item1 + 1);
-                var ls = BuildTree(innerList);
-                list.InsertRange(bi.Item1, ls);
-                return BuildTree(list);
-            }
-
-        }
-
-
         private List<ExpNode> BuildTree(List<ExpNode> list)
         {
             if (list.Count == 1)
@@ -165,10 +136,10 @@ namespace SpazL
 
 
             if (HasOpType(list, TokenType.Oparen))
-                return ProcessParens(list);
+                return Process(list, ProcessType.Parens);
 
             if (HasOpType(list, TokenType.Obrack))
-                return ProcessBracks(list);
+                return Process(list, ProcessType.Brackets);
 
 
             var orderList = new List<List<TokenType>>();
@@ -189,10 +160,6 @@ namespace SpazL
             }
             return list;
         }
-
-
-
-
         private int IndexOfO(List<ExpNode> list, TokenType type)
         {
             for (int i = list.Count - 1; i >= 0; i--)
@@ -209,22 +176,13 @@ namespace SpazL
             throw new Exception("Could not find Closing Op. spz.");
         }
 
-        public Tuple<int, int> FindInnerPars(List<ExpNode> list)
+
+        public Tuple<int, int> FindInner(List<ExpNode> list, TokenType otype, TokenType ctype)
         {
-            int i1 = IndexOfO(list,TokenType.Oparen);
-            int i2 = IndexOfC(list, i1, TokenType.Cparen);
+            int i1 = IndexOfO(list, otype);
+            int i2 = IndexOfC(list, i1, ctype);
             return new Tuple<int, int>(i1, i2);
         }
-
-        public Tuple<int, int> FindInnerBrackets(List<ExpNode> list)
-        {
-            int i1 = IndexOfO(list, TokenType.Obrack);
-            int i2 = IndexOfC(list, i1, TokenType.Cbrack);
-            return new Tuple<int, int>(i1, i2);
-        }
-
-
-
         private bool HasOpType(List<ExpNode> list, TokenType type )
         {
             foreach (ExpNode node in list)
@@ -258,11 +216,6 @@ namespace SpazL
             list.RemoveAt(i + 1);
             list.RemoveAt(i - 1);
         }
-
-
-
-  
-
         private void SetValue(Dictionary<ExpNode, object> valueDict, ExpNode node, object value)
         {
             if (valueDict.ContainsKey(node))
@@ -281,22 +234,16 @@ namespace SpazL
 
         private object Sub(State state, object expValue)
         {
-            if (state.ContainsKey(expValue.ToString()))
-                return state[expValue.ToString()].Value;
+            if (state.TryGetValue(expValue.ToString(), out VarState vsOut))
+                return vsOut.Value;
             else
                 return expValue;
-            
         }
-
-
-
         private object EvalCustomFunc(AST ast, string funcName, List<object> argList, State state)
         {
             Squirrel sq = new Squirrel(ast, argList, funcName);
             return sq.Traverse();
         }
-
-
         private object EvalFunc(AST ast, string funcName, List<object> argList, State state)
         {
             switch(funcName.ToLower())
@@ -348,7 +295,6 @@ namespace SpazL
                     throw new Exception("List Index can only have 1 child spaz.");
                 object index = Eval(ast, n.ChildList[0], state, valueDict);
                 index = Sub(state, index);
-                //n.ChildList[0].Value = index; //Sets the value of the Index
                 SetValue(valueDict, n.ChildList[0], index);
 
                 var list = (List<object>)state[n.ListName].Value;
@@ -370,14 +316,11 @@ namespace SpazL
 
             TokenType op = n.Token.Type;
 
-            
             object lValue = Eval(ast, n.ChildList[0], state, valueDict);
             lValue = Sub(state, lValue);
 
- 
             object rValue = Eval(ast, n.ChildList[1], state, valueDict);
             rValue = Sub(state, rValue);
-
 
             switch (op)
             {
@@ -429,17 +372,13 @@ namespace SpazL
                     throw new NotImplementedException("spaz");
             }
         }
-
         private int ToInt(object v)
         {
             return int.Parse(v.ToString());
         }
-
-
         private string ToString(object v)
         {
             return v.ToString();
         }
-
     }
 }

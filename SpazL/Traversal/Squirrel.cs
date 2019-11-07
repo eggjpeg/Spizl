@@ -35,7 +35,6 @@ namespace SpazL
             }
             
         }
-
         //Used by functions
         public Squirrel(AST ast, List<object> argList, string funcName)
         {
@@ -49,11 +48,6 @@ namespace SpazL
                 throw new Exception("SPAZ DOESNT HAVE ENOUGH ARGUMENTS just like you dont have enough chromosomes");
             if (fd.Params.Count < argList.Count)
                 throw new Exception("SPAZ HAS TOO MANY ARGUMENTS just like you have too many chromosomes");
-            //for (int i = 0; i < fd.Params.Count; i++)
-            //{
-            //    if (fd.Params[i].Type != argList[i].Type)
-            //        throw new Exception("type mismatch SPAZ. Expecting a " + fd.Params[i].Type.ToString() + " but received: " + argList[i].Type.ToString());
-            //}
         }
         private Node FindFunc(string name)
         {
@@ -76,7 +70,6 @@ namespace SpazL
 
         private bool swordOfKhali = false;
         private int spazoutLevel = 0;
-        private bool spazoutInitiated = false;
         
         private object Traverse(Node node, bool conCompleted)
         {
@@ -102,7 +95,6 @@ namespace SpazL
                     node = node.Children[0];
                     conCompleted = false;
                     emulateRec = true;
-                    //return Traverse(node.Children[0], false);
                 }
                 else if (node is Spazdun)
                 {
@@ -115,12 +107,10 @@ namespace SpazL
                 }
                 else if (node is Spazout)
                 {
-                    spazoutInitiated = true;
                     if ((node as Spazout).Exp == null)
-                        return null;
-
-                    ret = (node as Spazout).Exp.Eval(ast, State);
-                    return ret;
+                        spazoutLevel = 1;
+                    else
+                        spazoutLevel = Convert.ToInt32((node as Spazout).Exp.Eval(ast, State));
                 }
                 else if (node is FunctionCall)
                 {
@@ -166,7 +156,6 @@ namespace SpazL
                     {
                         if (node.Children.Count == 0)
                             throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS IF STATEMENT");
-                        // ret = Traverse(node.Children[0], false);
                         node = node.Children[0];
                         conCompleted = true;
                         emulateRec = true;
@@ -190,7 +179,6 @@ namespace SpazL
                         {
                             if (node.Children.Count == 0)
                                 throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS SPELZIF STATEMENT");
-                            //ret = Traverse(node.Children[0], false);
                             node = node.Children[0];
                             conCompleted = true;
                             emulateRec = true;
@@ -199,7 +187,6 @@ namespace SpazL
                 }
                 else if (node is Spelz)
                 {
-                    Spelz spelz = (node as Spelz);
                     var prevSib = GetPrevChild(node);
                     if (!(prevSib is Spif || prevSib is Spelzif))
                         throw new Exception("spaz cant have spelz without previous spif or elseif SPAZ");
@@ -207,7 +194,6 @@ namespace SpazL
                     {
                         if (node.Children.Count == 0)
                             throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS SPELZ STATEMENT");
-                        //  ret = Traverse(node.Children[0], false);
                         node = node.Children[0];
                         conCompleted = false;
                         emulateRec = true;
@@ -228,7 +214,6 @@ namespace SpazL
                     {
                         if (node.Children.Count == 0)
                             throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
-                        // return Traverse(node.Children[0], false);
                         node = node.Children[0];
                         conCompleted = false;
                         emulateRec = true;
@@ -237,17 +222,12 @@ namespace SpazL
                         conCompleted = false;
                 }
 
-
-
                 //Regular execution
                 if(!emulateRec)
                 { 
                     Node next = GetNextChild(node);
                     if (next != null && !swordOfKhali)
-                    {
-                        //ret = Traverse(next, conCompleted);
                         node = next; 
-                    }
                     else
                         return null;
                 }
@@ -256,9 +236,6 @@ namespace SpazL
 
         private bool Foreach(DoSpaz loop, bool r)
         {
-            //VarState vs = new VarState(d.VarName, d.Type, r);
-            //State.Add(vs.Name, vs);
-
             VarState index;
             VarState item;
             //See if your index and variable name are in state
@@ -293,14 +270,23 @@ namespace SpazL
 
             return r;
         }
-
         private Node GetSpazoutNext(Node n)
         {
             Node p = n;
-            while (!(p is DoSpaz))
+
+            int count = 0;
+            while(true)
+            {
+                if (p is DoSpaz)
+                    count++;
+
+                if (count == spazoutLevel || p.Parent == null)
+                    break;
+                
                 p = p.Parent;
-            
-            spazoutInitiated = false;
+
+            }
+            spazoutLevel = 0;
             return GetNextChild(p);//its re-evaluating the dudes so spazout doesnt do anything
         }
 
@@ -309,7 +295,7 @@ namespace SpazL
             if (n == null || n.Parent == null || n.Parent is AST)
                 return null;
 
-            if (spazoutInitiated)
+            if (spazoutLevel > 0)
                 return GetSpazoutNext(n);
 
 

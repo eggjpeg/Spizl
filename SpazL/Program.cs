@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -12,9 +13,12 @@ namespace SpazL
         static void Main(string[] args)
         {
             //SpazL.Run(args[0]);
-            SpazL spazl = new SpazL("spazl/Quicksort.spaz");
+            SpazL spazl = new SpazL("spazl/infinite.spaz");
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             spazl.Run();
-
+            sw.Stop();
+            Console.WriteLine(sw.ElapsedMilliseconds);
             Console.ReadLine();
         }
     }

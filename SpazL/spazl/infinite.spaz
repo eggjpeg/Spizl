@@ -1,7 +1,11 @@
 ﻿spaz:
 	int i = 0
 	dospaz
-		spif i > 100
-			sprint(i)
-			spazout.
-		i = i + 1..
+		dospaz
+			dospaz
+				spif i > 1000000
+					spazout 3.
+				i = i + 1.
+			sprint('fail').
+		sprint('fail2').
+	sprint(i).
