@@ -7,6 +7,5 @@
 					spazout 3.
 				i = i + 1.
 			sprint('fail').
-			# spaz
 		sprint('fail2').
 	sprint(i).

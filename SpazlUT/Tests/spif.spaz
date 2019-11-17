@@ -8,4 +8,4 @@
 	spelz 
 		sprint('massive spaz').
 	spif i = 0
-		sprint('spaz again')..
+		sprint('spz')..

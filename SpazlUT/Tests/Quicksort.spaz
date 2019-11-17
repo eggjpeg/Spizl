@@ -8,7 +8,7 @@ Partition(lint numbers, int left, int right): int
 		dospaz numbers[right] > pivot
             right = right - 1.
 		spif left < right
-		    spif (numbers[left] == numbers[right]) 
+		    spif (numbers[left] = numbers[right]) 
 				spazdun right.
 			temp = numbers[right]
 			numbers[right] = numbers[left]

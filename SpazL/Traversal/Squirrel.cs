@@ -13,12 +13,10 @@ namespace SpazL
         private AST ast;
         List<object> argList = new List<object>();
 
-
         public string GetTrace()
         {
             return State.Trace.ToString();
         }
-
 
         public Squirrel(AST ast)
         {
@@ -65,21 +63,19 @@ namespace SpazL
         public object Traverse()
         {
             Node spazFunc = FindFunc(funcName);
-            return Traverse(spazFunc, false);
+            return Traverse(spazFunc);
         }
 
         private bool swordOfKhali = false;
         private int spazoutLevel = 0;
         
-        private object Traverse(Node node, bool conCompleted)
+        private object Traverse(Node node)
         {
+            bool conditionCompleted = false;
             object ret = null;
-
 
             while (true)
             {
-                bool emulateRec = false;
-
                 if (swordOfKhali)
                     return ret;
 
@@ -93,8 +89,7 @@ namespace SpazL
                         throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
 
                     node = node.Children[0];
-                    conCompleted = false;
-                    emulateRec = true;
+                    continue;
                 }
                 else if (node is Spazdun)
                 {
@@ -140,9 +135,7 @@ namespace SpazL
                         list[i] = r;
                     }
                     else
-                    {
                         State[a.VarName].Value = r;
-                    }
 
                 }
                 else if (node is Spif)
@@ -157,11 +150,11 @@ namespace SpazL
                         if (node.Children.Count == 0)
                             throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS IF STATEMENT");
                         node = node.Children[0];
-                        conCompleted = true;
-                        emulateRec = true;
+                        conditionCompleted = true;
+                        continue;
                     }
                     else
-                        conCompleted = false;
+                        conditionCompleted = false;
                 }
                 else if (node is Spelzif)
                 {
@@ -169,7 +162,7 @@ namespace SpazL
                     var prevSib = GetPrevChild(node);
                     if (!(prevSib is Spif || prevSib is Spelzif))
                         throw new Exception("spaz cant have else if without previous spif or spelzif SPAZ");
-                    if (!(conCompleted))
+                    if (!(conditionCompleted))
                     {
                         object r = spelzIf.Exp.Eval(ast, State);
                         if (!(r is bool))
@@ -180,8 +173,8 @@ namespace SpazL
                             if (node.Children.Count == 0)
                                 throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS SPELZIF STATEMENT");
                             node = node.Children[0];
-                            conCompleted = true;
-                            emulateRec = true;
+                            conditionCompleted = true;
+                            continue;
                         }
                     }
                 }
@@ -190,13 +183,12 @@ namespace SpazL
                     var prevSib = GetPrevChild(node);
                     if (!(prevSib is Spif || prevSib is Spelzif))
                         throw new Exception("spaz cant have spelz without previous spif or elseif SPAZ");
-                    if (!(conCompleted))
+                    if (!(conditionCompleted))
                     {
                         if (node.Children.Count == 0)
                             throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS SPELZ STATEMENT");
                         node = node.Children[0];
-                        conCompleted = false;
-                        emulateRec = true;
+                        continue;
                     }
                 }
                 else if (node is DoSpaz)
@@ -210,27 +202,23 @@ namespace SpazL
                     else if (loop.Type == DoSpazType.Foreach)
                         r = Foreach(loop, r);
 
+                    conditionCompleted = false;
+
                     if (r)
                     {
                         if (node.Children.Count == 0)
                             throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
                         node = node.Children[0];
-                        conCompleted = false;
-                        emulateRec = true;
+                        continue;
                     }
-                    else
-                        conCompleted = false;
                 }
 
                 //Regular execution
-                if(!emulateRec)
-                { 
-                    Node next = GetNextChild(node);
-                    if (next != null && !swordOfKhali)
-                        node = next; 
-                    else
-                        return null;
-                }
+                Node next = GetNextChild(node);
+                if (next != null && !swordOfKhali)
+                    node = next;
+                else
+                    return null;
             }
         }
 
@@ -272,22 +260,17 @@ namespace SpazL
         }
         private Node GetSpazoutNext(Node n)
         {
-            Node p = n;
-
             int count = 0;
             while(true)
             {
-                if (p is DoSpaz)
+                if (n is DoSpaz)
                     count++;
-
-                if (count == spazoutLevel || p.Parent == null)
-                    break;
-                
-                p = p.Parent;
-
+                if (count == spazoutLevel || n.Parent == null)
+                    break;              
+                n = n.Parent;
             }
             spazoutLevel = 0;
-            return GetNextChild(p);//its re-evaluating the dudes so spazout doesnt do anything
+            return GetNextChild(n);//its re-evaluating the dudes so spazout doesnt do anything
         }
 
         private Node GetNextChild(Node n)

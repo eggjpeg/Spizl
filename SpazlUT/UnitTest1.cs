@@ -35,7 +35,7 @@ namespace SpazlUT
         {
             SpazL.SpazL spaz = new SpazL.SpazL("Tests/QuickSort.spaz");
             spaz.Run();
-            string expected = "2368912161761886911219608";
+            string expected = "22368912161761886911219608";
             Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
         }
         [TestMethod]
@@ -64,7 +64,25 @@ namespace SpazlUT
         {
             SpazL.SpazL spaz = new SpazL.SpazL("Tests/spazout.spaz");
             spaz.Run();
-            string expected = "16";
+            string expected = "161820101";
+            Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
+        }
+
+        [TestMethod]
+        public void Infinite()
+        {
+            SpazL.SpazL spaz = new SpazL.SpazL("Tests/infinite.spaz");
+            spaz.Run();
+            string expected = "1000001";
+            Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
+        }
+
+        [TestMethod]
+        public void Spif()
+        {
+            SpazL.SpazL spaz = new SpazL.SpazL("Tests/spif.spaz");
+            spaz.Run();
+            string expected = "0spz";
             Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
         }
 

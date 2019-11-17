@@ -51,7 +51,8 @@ namespace SpazL
         VarName = -1,
         Const = -2,
         Eol = -3,
-        Dot = -4
+        Dot = -4,
+        Comment = -5
     }
    
     class Token

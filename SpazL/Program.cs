@@ -13,12 +13,12 @@ namespace SpazL
         static void Main(string[] args)
         {
             //SpazL.Run(args[0]);
-            SpazL spazl = new SpazL("spazl/infinite.spaz");
+            SpazL spazl = new SpazL("spazl/spif.spaz");
             Stopwatch sw = new Stopwatch();
             sw.Start();
             spazl.Run();
             sw.Stop();
-            Console.WriteLine(sw.ElapsedMilliseconds);
+            Console.WriteLine(sw.ElapsedMilliseconds + " ms elapsed");
             Console.ReadLine();
         }
     }
