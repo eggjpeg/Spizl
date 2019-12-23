@@ -13,7 +13,8 @@ namespace SpazL
         static void Main(string[] args)
         {
             //SpazL.Run(args[0]);
-            SpazL spazl = new SpazL("spazl/spazthefirst.spaz");
+            Console.WriteLine(".");
+            SpazL spazl = new SpazL("spazl/spif.spaz");
             Stopwatch sw = new Stopwatch();
             sw.Start();
             spazl.Run();
@@ -22,5 +23,4 @@ namespace SpazL
             Console.ReadLine();
         }
     }
-
 }
