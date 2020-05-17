@@ -15,7 +15,7 @@ namespace SpazL
                 Exp = new Expression(exp);
         }
 
-        public override string GetInfo()
+        public override string ToTreeString(int indent)
         {
             return "Spazout ";
         }

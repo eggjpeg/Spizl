@@ -26,6 +26,15 @@ namespace SpazL
             Parser p = new Parser();
             AST ast = p.Parse(list);
 
+            Declaration d = (Declaration)ast.Children[0].Children[1];
+
+            Compiler c = new Compiler();
+            
+            string asm = c.Compile(d.Exp);
+            Console.WriteLine(asm);
+
+
+
             //Step 3.
             Squirrel sq = new Squirrel(ast);
             sq.Traverse();

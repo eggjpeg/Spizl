@@ -29,7 +29,7 @@ namespace SpazL
             Children.Add(n);
         }
 
-        public abstract string GetInfo();
+        public abstract string ToTreeString(int indent);
         
         public void PrintPretty(string indent, bool last)
         {
@@ -45,7 +45,7 @@ namespace SpazL
                 indent += "| ";
             }
             
-            Console.WriteLine(GetInfo());
+            Console.WriteLine(ToTreeString(indent.Length));
 
             if (Children == null)
                 return;

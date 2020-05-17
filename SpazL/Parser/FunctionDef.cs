@@ -71,7 +71,7 @@ namespace SpazL
 
 
         }
-        public override string GetInfo()
+        public override string ToTreeString(int indent)
         {
             string s =  "Func Def " + Name + "(";
             foreach (FunctionParam p in Params)

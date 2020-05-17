@@ -39,9 +39,9 @@ namespace SpazL
             
         }
 
-        public override string GetInfo()
+        public override string ToTreeString(int indent)
         {
-            return "Assignment " + VarName;
+            return "Assignment " + VarName + Environment.NewLine + RightExpression.ToTreeString(indent);
         }
     }
 }

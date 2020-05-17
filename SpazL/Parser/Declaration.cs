@@ -19,9 +19,9 @@ namespace SpazL
                 Exp = new Expression(exp);
         }
 
-        public override string GetInfo()
+        public override string ToTreeString(int offset)
         {
-            return "Dec " + VarName;
+            return "Dec " + VarName + Environment.NewLine + Exp.ToTreeString(offset);
         }
     }
 }

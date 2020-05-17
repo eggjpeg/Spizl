@@ -15,7 +15,7 @@ namespace SpazL
             this.SetNewParent = true;
             Exp = new Expression(e);
         }
-        public override string GetInfo()
+        public override string ToTreeString(int indent)
         {
             return "Spelzif " + Token.ToString(Exp.Exp);
         }

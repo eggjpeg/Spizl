@@ -380,5 +380,10 @@ namespace SpazL
         {
             return v.ToString();
         }
+
+        public string ToTreeString(int indent)
+        {
+            return ExpTree.ToTreeString(indent).TrimEnd();
+        }
     }
 }

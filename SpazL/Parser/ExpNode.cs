@@ -66,12 +66,14 @@ namespace SpazL
         }
 
 
-        public override string ToString()
+
+        public string ToTreeString(int indent)
         {
             StringBuilder sb = new StringBuilder();
-            ToStr(sb, "", false);
+            ToStr(sb, new string(' ',indent), false);
             return sb.ToString();
         }
+
         public void ToStr(StringBuilder sb, string indent, bool last)
         {
             sb.Append(indent);

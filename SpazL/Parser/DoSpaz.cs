@@ -78,7 +78,7 @@ namespace SpazL
                 throw new Exception("SPAZ incorrect dospaz type, type 4 diabetes ");
             }
         }
-        public override string GetInfo()
+        public override string ToTreeString(int indent)
         {
             switch(Type)
             {

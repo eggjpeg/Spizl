@@ -12,7 +12,7 @@ namespace SpazL
         {
             this.SetNewParent = true;
         }
-        public override string GetInfo()
+        public override string ToTreeString(int indent)
         {
             return "Spelz";
         }

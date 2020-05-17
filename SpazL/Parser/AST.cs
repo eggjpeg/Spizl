@@ -8,7 +8,7 @@ namespace SpazL
 {
     class AST : Node
     {
-        public override string GetInfo()
+        public override string ToTreeString(int indent)
         {
             return "AST";
         }

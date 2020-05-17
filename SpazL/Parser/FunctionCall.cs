@@ -20,7 +20,7 @@ namespace SpazL
 
             Exp = new Expression(e);
         }
-        public override string GetInfo()
+        public override string ToTreeString(int indent)
         {
             return "Func " + Name ;
         }
