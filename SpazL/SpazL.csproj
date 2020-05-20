@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compiler\Compiler.cs" />
+    <Compile Include="Compiler\Function.cs" />
     <Compile Include="Compiler\Instruction.cs" />
     <Compile Include="Parser\AST.cs" />
     <Compile Include="Parser\Assignment.cs" />

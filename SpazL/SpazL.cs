@@ -26,12 +26,10 @@ namespace SpazL
             Parser p = new Parser();
             AST ast = p.Parse(list);
 
-            Declaration d = (Declaration)ast.Children[0].Children[1];
+            Function f = new Function();
 
-            Compiler c = new Compiler();
-            
-            string asm = c.Compile(d.Exp);
-            Console.WriteLine(asm);
+           string s =  f.Compile((FunctionDef)ast.Children[0]);
+            Console.WriteLine(s);
 
 
 
