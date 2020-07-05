@@ -1,3 +1,4 @@
-﻿1.Spazout levels
-2. Clean up 
-con completed 
+﻿1. put vars inside exps
+2. strings
+3.  make the whole thing compile
+4. spaz
