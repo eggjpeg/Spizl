@@ -59,9 +59,9 @@
     <Compile Include="Parser\DoSpaz.cs" />
     <Compile Include="Parser\Node.cs" />
     <Compile Include="Parser\Parser.cs" />
-    <Compile Include="Parser\Spazout.cs" />
-    <Compile Include="SpazL.cs" />
-    <Compile Include="Parser\Spazdun.cs" />
+    <Compile Include="Parser\Spizout.cs" />
+    <Compile Include="Spizl.cs" />
+    <Compile Include="Parser\Spizdun.cs" />
     <Compile Include="Traversal\Squirrel.cs" />
     <Compile Include="Traversal\State.cs" />
     <Compile Include="Traversal\VarState.cs" />
@@ -80,83 +80,83 @@
     <None Include="IL\sprint_int.il" />
     <None Include="IL\sprint_str.il" />
     <None Include="packages.config" />
-    <None Include="spazl\dospaz_simple.spaz">
+    <None Include="spizl\dospaz_simple.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\foreach.spaz">
+    <None Include="spizl\foreach.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\infinite.spaz">
+    <None Include="spizl\infinite.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\qs2.spaz" />
-    <None Include="spazl\Quicksort.spaz">
+    <None Include="spizl\qs2.spaz" />
+    <None Include="spizl\Quicksort.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\add.spaz">
+    <None Include="spizl\add.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\bubblespaz.spaz">
+    <None Include="spizl\bubblespaz.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\factorial.spaz">
+    <None Include="spizl\factorial.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\spazthefirst.spaz">
+    <None Include="spizl\spazthefirst.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\function.spaz">
+    <None Include="spizl\function.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\nested.spaz">
+    <None Include="spizl\nested.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\simplespaz.spaz">
+    <None Include="spizl\simplespaz.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\spazdun.spaz">
+    <None Include="spizl\spazdun.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\spazout.spaz">
+    <None Include="spizl\spazout.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\str.spaz">
+    <None Include="spizl\str.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\spif.spaz">
+    <None Include="spizl\spif.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\state.spaz">
+    <None Include="spizl\state.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="spazl\_exp.spaz">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="spazl\DoSpaz.spaz">
+    <None Include="spizl\_exp.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="spazl\lists.spaz">
+    <None Include="spizl\DoSpaz.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="spazl\list_ass.spaz">
+    <None Include="spizl\lists.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="spazl\int.spaz">
+    <None Include="spizl\list_ass.spaz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="spizl\int.spaz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="IL\DoSpaz_IL.txt" />
     <Content Include="IL\if.il.txt" />
     <Content Include="IL\infinitespaz.il.txt" />
     <Content Include="IL\simpleloop.il.txt" />
-    <Content Include="spazl\spazlroadmap.png" />
+    <Content Include="spizl\spazlroadmap.png" />
     <Content Include="todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

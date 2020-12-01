@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SpazL\SpazL.csproj" />
+    <ProjectReference Include="..\SpazL\Spizl.csproj" />
   </ItemGroup>
 
   <ItemGroup>

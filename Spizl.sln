@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpazL", "SpazL\SpazL.csproj", "{50936DF2-9223-411E-8393-B538B5927AD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spizl", "SpazL\Spizl.csproj", "{50936DF2-9223-411E-8393-B538B5927AD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpazlUT", "SpazlUT\SpazlUT.csproj", "{C2921A6C-2006-48DD-BE5E-EEA1E5BBB633}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpizlUT", "SpazlUT\SpizlUT.csproj", "{C2921A6C-2006-48DD-BE5E-EEA1E5BBB633}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

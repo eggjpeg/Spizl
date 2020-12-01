@@ -14,7 +14,7 @@ namespace SpazL
         {
             //SpazL.Run(args[0]);
             Console.WriteLine(".");
-            SpazL spazl = new SpazL("spazl/_exp.spaz");
+            Spizl spazl = new Spizl("spazl/_exp.spaz");
             Stopwatch sw = new Stopwatch();
             sw.Start();
             spazl.Run();

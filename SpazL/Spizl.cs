@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace SpazL
 {
-    public class SpazL
+    public class Spizl
     {
         private string file;
-        public SpazL(string file)
+        public Spizl(string file)
         {
             this.file = file;
         }
