@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace SpazlUT
+namespace spizlUT
 {
     [TestClass]
     public class UnitTest1
@@ -14,76 +14,76 @@ namespace SpazlUT
         [TestMethod]
         public void Bubble()
         {
-            SpazL.SpazL spaz = new SpazL.SpazL("Tests/bubble.spaz");
-            spaz.Run();
+            spizL.spizL spiz = new spizL.spizL("Tests/bubble.spiz");
+            spiz.Run();
 
             string expected = "0123451098";
-            Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
+            Assert.AreEqual(expected, FS(spiz.Result), "Fail. spiz.");
         }
 
         [TestMethod]
         public void String()
         {
-            SpazL.SpazL spaz = new SpazL.SpazL("Tests/string.spaz");
-            spaz.Run();
-            string expected = "spz123assspaz";
-            Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
+            spizL.spizL spiz = new spizL.spizL("Tests/string.spiz");
+            spiz.Run();
+            string expected = "spz123assspiz";
+            Assert.AreEqual(expected, FS(spiz.Result), "Fail. spiz.");
         }
         //2368912161761886911219608
         [TestMethod]
         public void QuickSort()
         {
-            SpazL.SpazL spaz = new SpazL.SpazL("Tests/QuickSort.spaz");
-            spaz.Run();
+            spizL.spizL spiz = new spizL.spizL("Tests/QuickSort.spiz");
+            spiz.Run();
             string expected = "22368912161761886911219608";
-            Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
+            Assert.AreEqual(expected, FS(spiz.Result), "Fail. spiz.");
         }
         [TestMethod]
 
         public void Factorial()
         {
-            SpazL.SpazL spaz = new SpazL.SpazL("Tests/factorial.spaz");
-            spaz.Run();
+            spizL.spizL spiz = new spizL.spizL("Tests/factorial.spiz");
+            spiz.Run();
             string expected = "3628800";
-            Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
+            Assert.AreEqual(expected, FS(spiz.Result), "Fail. spiz.");
         }
 
         [TestMethod]
 
         public void Foreach()
         {
-            SpazL.SpazL spaz = new SpazL.SpazL("Tests/foreach.spaz");
-            spaz.Run();
+            spizL.spizL spiz = new spizL.spizL("Tests/foreach.spiz");
+            spiz.Run();
             string expected = "56788";
-            Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
+            Assert.AreEqual(expected, FS(spiz.Result), "Fail. spiz.");
         }
 
         [TestMethod]
 
-        public void Spazout()
+        public void spizout()
         {
-            SpazL.SpazL spaz = new SpazL.SpazL("Tests/spazout.spaz");
-            spaz.Run();
+            spizL.spizL spiz = new spizL.spizL("Tests/spizout.spiz");
+            spiz.Run();
             string expected = "161820101";
-            Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
+            Assert.AreEqual(expected, FS(spiz.Result), "Fail. spiz.");
         }
 
         [TestMethod]
         public void Infinite()
         {
-            SpazL.SpazL spaz = new SpazL.SpazL("Tests/infinite.spaz");
-            spaz.Run();
+            spizL.spizL spiz = new spizL.spizL("Tests/infinite.spiz");
+            spiz.Run();
             string expected = "1000001";
-            Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
+            Assert.AreEqual(expected, FS(spiz.Result), "Fail. spiz.");
         }
 
         [TestMethod]
         public void Spif()
         {
-            SpazL.SpazL spaz = new SpazL.SpazL("Tests/spif.spaz");
-            spaz.Run();
+            spizL.spizL spiz = new spizL.spizL("Tests/spif.spiz");
+            spiz.Run();
             string expected = "0spz";
-            Assert.AreEqual(expected, FS(spaz.Result), "Fail. spaz.");
+            Assert.AreEqual(expected, FS(spiz.Result), "Fail. spiz.");
         }
 
     }

@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SpazL\SpazL.csproj" />
+    <ProjectReference Include="..\spizL\spizL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,28 +23,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Tests\bubble.spaz">
+    <None Update="Tests\bubble.spiz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Tests\factorial.spaz">
+    <None Update="Tests\factorial.spiz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Tests\foreach.spaz">
+    <None Update="Tests\foreach.spiz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Tests\infinite.spaz">
+    <None Update="Tests\infinite.spiz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Tests\Quicksort.spaz">
+    <None Update="Tests\Quicksort.spiz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Tests\spazout.spaz">
+    <None Update="Tests\spizout.spiz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Tests\spif.spaz">
+    <None Update="Tests\spif.spiz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Tests\string.spaz">
+    <None Update="Tests\string.spiz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

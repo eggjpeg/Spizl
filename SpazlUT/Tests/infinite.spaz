@@ -1,10 +1,10 @@
-﻿spaz:
+﻿spiz:
 	int i = 0
-	dospaz
-		dospaz
-			dospaz
+	dospiz
+		dospiz
+			dospiz
 				spif i > 1000000
-					spazout 3.
+					spizout 3.
 				i = i + 1.
 			sprint('fail').
 		sprint('fail2').

@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpazL
+namespace spizL
 {
-    class Spazdun: Node
+    class spizout : Node
     {
         public Expression Exp { get; set; }
-        public Spazdun(List<Token> exp)
+        public spizout(List<Token> exp)
         {
-            if (exp != null)
+            if (exp != null && exp.Count > 0)
                 Exp = new Expression(exp);
         }
 
         public override string ToTreeString(int indent)
         {
-            return "Spazdun ";
+            return "spizout ";
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace SpazL
+namespace spizL
 {
     class Lexer
     {
@@ -95,10 +95,10 @@ namespace SpazL
 
         }
 
-        public List<Token> Tokenize(string spazfile)
+        public List<Token> Tokenize(string spizfile)
         {
             var list = new List<Token>();
-            using (StreamReader sr = new StreamReader(spazfile))
+            using (StreamReader sr = new StreamReader(spizfile))
             {
                 while(!sr.EndOfStream)
                 {
@@ -165,9 +165,9 @@ namespace SpazL
                 case "spif": return new Token(TokenType.Spif);
                 case "spelz": return new Token(TokenType.Spelz);
                 case "spelzif": return new Token(TokenType.Spelzif);
-                case "spazout": return new Token(TokenType.Spazout);
-                case "spazdun": return new Token(TokenType.Spazdun);
-                case "dospaz": return new Token(TokenType.DoSpaz);
+                case "spizout": return new Token(TokenType.spizout);
+                case "spizdun": return new Token(TokenType.spizdun);
+                case "dospiz": return new Token(TokenType.Dospiz);
                 case "sprint": return new Token(TokenType.Sprint);
                 case "/": return new Token(TokenType.Divide);
                 case "*": return new Token(TokenType.Multiply);

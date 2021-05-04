@@ -4,37 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpazL
+namespace spizL
 {
     /// <summary>
-    /// 1. dospaz
-    /// 2. dospaz i>2
-    /// 3. dospaz int item col
+    /// 1. dospiz
+    /// 2. dospiz i>2
+    /// 3. dospiz int item col
     /// 
     /// lint col
     /// spadd(col,2)
     /// spadd(col,3)
     /// 
-    /// dospaz int item col
+    /// dospiz int item col
     ///     sprint(item).
     ///     
     /// </summary>
     /// 
 
-    public enum DoSpazType
+    public enum DospizType
     {
         Infinite = 1,
         While = 2,
         Foreach = 3
     }
 
-    class DoSpaz : Node
+    class Dospiz : Node
     {
         
         //Either starting declaration or condition
         public Expression Exp { get; set; }
 
-        public DoSpazType Type { get; set; }
+        public DospizType Type { get; set; }
 
         public TokenType ItemType { get; set; }
         public string ItemName { get; set; }
@@ -51,40 +51,40 @@ namespace SpazL
             return false;
         }
 
-        public DoSpaz(List<Token> e)
+        public Dospiz(List<Token> e)
         {
             this.SetNewParent = true;
             if (e == null || e.Count == 0) // Type 1
             {
                 Exp = null;
-                Type = DoSpazType.Infinite;
+                Type = DospizType.Infinite;
             }
             else if (HasOp(e)) //Type 2
             {
                 Exp = new Expression(e);
-                Type = DoSpazType.While;
+                Type = DospizType.While;
             }
             else if(e.Count == 3) //Type 3
             {
                 ItemType = e[0].Type;
                 if(!(ItemType == TokenType.Int || ItemType == TokenType.Str))
-                    throw new Exception("SPAZ your dospaz variable has to be type int or string SPAZ");
+                    throw new Exception("spiz your dospiz variable has to be type int or string spiz");
                 ItemName = e[1].Value;
                 Collection = e[2].Value;
-                Type = DoSpazType.Foreach;
+                Type = DospizType.Foreach;
             }
             else
             {
-                throw new Exception("SPAZ incorrect dospaz type, type 4 diabetes ");
+                throw new Exception("spiz incorrect dospiz type, type 4 diabetes ");
             }
         }
         public override string ToTreeString(int indent)
         {
             switch(Type)
             {
-                case DoSpazType.Infinite: return "Infinite Spaz...";
-                case DoSpazType.While: return "DoSpaz " + Token.ToString(Exp.Exp);
-                case DoSpazType.Foreach: return "DoSpaz " + ItemType.ToString() + " " + ItemName + " " + Collection;
+                case DospizType.Infinite: return "Infinite spiz...";
+                case DospizType.While: return "Dospiz " + Token.ToString(Exp.Exp);
+                case DospizType.Foreach: return "Dospiz " + ItemType.ToString() + " " + ItemName + " " + Collection;
             }
             return "";
         }

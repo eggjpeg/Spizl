@@ -32,7 +32,7 @@
     IL_0011:  stloc.s    V_4
     IL_0013:  br.s       IL_0025
 
-    IL_0015:  ldstr      "INFINITE SPAZ"
+    IL_0015:  ldstr      "INFINITE spiz"
     IL_001a:  call       void [mscorlib]System.Console::WriteLine(string)
     IL_001f:  ldloc.s    V_4
     IL_0021:  ldc.i4.1

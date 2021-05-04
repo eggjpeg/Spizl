@@ -2,19 +2,19 @@
 Partition(lint numbers, int left, int right): int
 	int pivot = numbers[left]
 	int temp = 0
-	dospaz 
-		dospaz numbers[left] < pivot
+	dospiz 
+		dospiz numbers[left] < pivot
 			left = left + 1.
-		dospaz numbers[right] > pivot
+		dospiz numbers[right] > pivot
             right = right - 1.
 		spif left < right
 		    spif (numbers[left] = numbers[right]) 
-				spazdun right.
+				spizdun right.
 			temp = numbers[right]
 			numbers[right] = numbers[left]
             numbers[left] = temp.
 		spelz
-			spazdun right...
+			spizdun right...
 
 Sort(lint arr, int left, int right):
 	int pivot = 0
@@ -25,11 +25,11 @@ Sort(lint arr, int left, int right):
 		spif pivot + 1 < right
 			Sort(arr, pivot + 1, right)...
 
-spaz():
+spiz():
 	lint list
 	int i = 0
 	spad(list,3,2,2,8,6,9,9608,121,617,869,1121,618)
 	Sort(list,0,splen(list)-1)
-	dospaz i < splen(list)
+	dospiz i < splen(list)
 		sprint(list[i])
 		i = i + 1..

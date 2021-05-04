@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpazL
+namespace spizL
 {
     enum ProcessType
     {
@@ -35,7 +35,7 @@ namespace SpazL
 
             var r = BuildTree(list);
             if (r.Count > 1)
-                throw new Exception("There can only be 1 root, spaz");
+                throw new Exception("There can only be 1 root, spiz");
 
             return r[0];
         }
@@ -78,7 +78,7 @@ namespace SpazL
         {
             var innerList = new List<ExpNode>();
 
-            //Spaz code by mr.spaz
+            //spiz code by mr.spiz
             for (int i = 0; i < list.Count; i++)
             {
                 if (bi.Item1 < i && bi.Item2 > i)
@@ -106,7 +106,7 @@ namespace SpazL
                     {
                         List<ExpNode> argResult = BuildTree(arg);
                         if (argResult.Count > 1)
-                            throw new Exception("Function Argument must resolve to a single ExpNode. spaz.");
+                            throw new Exception("Function Argument must resolve to a single ExpNode. spiz.");
                         node.AddChild(argResult[0]);
                     }
                 }
@@ -115,7 +115,7 @@ namespace SpazL
                     node.IsListIndex = true;
                     List<ExpNode> indexResult = BuildTree(innerList);
                     if (indexResult.Count > 1)
-                        throw new Exception("List Index must resolve to a single ExpNode. spaz.");
+                        throw new Exception("List Index must resolve to a single ExpNode. spiz.");
                     node.AddChild(indexResult[0]);
                 }
                 list.RemoveRange(bi.Item1, bi.Item2 - bi.Item1 + 1);
@@ -292,7 +292,7 @@ namespace SpazL
             {
                 //Sanity Check
                 if (n.ChildList.Count > 1)
-                    throw new Exception("List Index can only have 1 child spaz.");
+                    throw new Exception("List Index can only have 1 child spiz.");
                 object index = Eval(ast, n.ChildList[0], state, valueDict);
                 index = Sub(state, index);
                 SetValue(valueDict, n.ChildList[0], index);
@@ -312,7 +312,7 @@ namespace SpazL
 
             //Sanity check                                                                                       
             if (!n.Token.IsOp())
-                throw new Exception("Op Type expected.. spaz.");
+                throw new Exception("Op Type expected.. spiz.");
 
             TokenType op = n.Token.Type;
 
@@ -369,7 +369,7 @@ namespace SpazL
                     SetValue(valueDict, n, v);
                     return v;
                 default:
-                    throw new NotImplementedException("spaz");
+                    throw new NotImplementedException("spiz");
             }
         }
         private int ToInt(object v)

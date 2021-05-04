@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpazL
+namespace spizL
 {
 
 
@@ -21,10 +21,10 @@ namespace SpazL
         // Commands
         Spif = 100,
         Sprint = 101,
-        Spazout =102,
-        Spazdun = 103,
+        spizout =102,
+        spizdun = 103,
         Spelz = 104,
-        DoSpaz = 105,
+        Dospiz = 105,
         Spelzif = 106,
         // Op types
         Plus = 200,

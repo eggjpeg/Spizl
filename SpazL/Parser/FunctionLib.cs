@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpazL
+namespace spizL
 {
     class FunctionLib
     {
@@ -41,10 +41,10 @@ namespace SpazL
 
         public static int Splen(List<object> list)
         {
-            var spazList = list[0];
-            if (!(spazList is List<object>))
-                throw new Exception("invalid list type spaz.");
-            return ((List<object>)spazList).Count;
+            var spizList = list[0];
+            if (!(spizList is List<object>))
+                throw new Exception("invalid list type spiz.");
+            return ((List<object>)spizList).Count;
         }
 
 
@@ -52,11 +52,11 @@ namespace SpazL
         {
             var lst = list[0];
             if (!(lst is List<object>))
-                throw new Exception("invalid list type spaz.");
+                throw new Exception("invalid list type spiz.");
 
-            var spazList = lst as List<object>;
+            var spizList = lst as List<object>;
             for (int i=1;i<list.Count;i++)
-                spazList.Add(list[i]);
+                spizList.Add(list[i]);
 
             return 0;
         }
@@ -65,13 +65,13 @@ namespace SpazL
         {
             var lst = list[0];
             if (!(lst is List<object>))
-                throw new Exception("invalid list type spaz.");
-            var spazList = lst as List<object>;
+                throw new Exception("invalid list type spiz.");
+            var spizList = lst as List<object>;
 
             if (list.Count > 2)
-               spazList.RemoveRange(int.Parse(list[1].ToString()), int.Parse(list[2].ToString()));
+               spizList.RemoveRange(int.Parse(list[1].ToString()), int.Parse(list[2].ToString()));
             else
-               spazList.RemoveAt(int.Parse(list[1].ToString()));
+               spizList.RemoveAt(int.Parse(list[1].ToString()));
 
             return 0;
         }

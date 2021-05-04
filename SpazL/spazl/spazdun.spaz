@@ -1,6 +1,6 @@
-﻿spaz:
-	int i = TestSpazdun(1)
+﻿spiz:
+	int i = Testspizdun(1)
 	sprint(i).
 
-TestSpazdun(int i): int
-	spazdun 5.
+Testspizdun(int i): int
+	spizdun 5.

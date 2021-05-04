@@ -59,7 +59,7 @@
     // Code size       21 (0x15)
     .maxstack  8
 
-    $SPAZL_CODE$
+    $spizL_CODE$
 	   
 	IL_0014:  ret
   } // end of method Program::Main

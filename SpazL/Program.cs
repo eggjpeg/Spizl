@@ -6,18 +6,18 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SpazL
+namespace spizL
 {
     class Program
     {
         static void Main(string[] args)
         {
-            //SpazL.Run(args[0]);
+            //spizL.Run(args[0]);
             Console.WriteLine(".");
-            SpazL spazl = new SpazL("spazl/_exp.spaz");
+            spizL spizl = new spizL("spizl/_exp.spiz");
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            spazl.Run();
+            spizl.Run();
             sw.Stop();
             Console.WriteLine(sw.ElapsedMilliseconds + " ms elapsed");
             Console.ReadLine();

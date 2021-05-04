@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpazL
+namespace spizL
 {
     class Assignment:Node
     {
@@ -24,7 +24,7 @@ namespace SpazL
         {
             Exp = new Expression(exp);
             if (!(Exp.ExpTree.Token.Type == TokenType.Equal))
-                throw new Exception("Not Assignment Spaz!");
+                throw new Exception("Not Assignment spiz!");
 
             RightExpression = new Expression(Exp.ExpTree.ChildList[1]);
             LeftExpression = new Expression(Exp.ExpTree.ChildList[0]);

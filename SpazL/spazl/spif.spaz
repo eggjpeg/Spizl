@@ -1,11 +1,11 @@
-﻿spaz:
+﻿spiz:
 	int i = 0
 	spif i >= 0
 		spif i >= 0
 			sprint(i).
 		spelz 
-			sprint('spaz')..
+			sprint('spiz')..
 	spelz 
-		sprint('massive spaz').
+		sprint('massive spiz').
 	spif i = 0
-		sprint('spaz again')..
+		sprint('spiz again')..

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpazL
+namespace spizL
 {
     class Compiler
     {
 
-        //        spaz:
+        //        spiz:
         //int j = 2
         //int i = 2 + 3 - (5 * add(2 * 4, 3 - 3, mul(4 * 2, j * 3 * j)))
         //sprint(i)

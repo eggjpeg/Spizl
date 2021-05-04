@@ -1,12 +1,12 @@
-﻿spaz:
+﻿spiz:
 	int a = 10
-	dospaz a > 2
-		dospaz a < 20
+	dospiz a > 2
+		dospiz a < 20
 			a = a + 1
 			spif a > 15
 				sprint(a)
-				spazout..
+				spizout..
 		a = a + 1
 		spif a > 100
-			spazout..
+			spizout..
 	sprint(a).

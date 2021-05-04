@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpazL
+namespace spizL
 {
     class Util
     {
@@ -15,7 +15,7 @@ namespace SpazL
 
         public static bool IsDouble(string str)
         {
-            return double.TryParse(str.ToString(), out double spaz);
+            return double.TryParse(str.ToString(), out double spiz);
         }
 
         public static bool IsNumber(string s)

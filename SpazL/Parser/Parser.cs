@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpazL
+namespace spizL
 {
     class Parser
     {
@@ -74,24 +74,24 @@ namespace SpazL
                     return new Declaration(line[0].Type, line[1].Value, null);
                 else
                     return new Declaration(line[0].Type, line[1].Value, line.GetRange(3, line.Count - 3));
-            else if (line[0].Type == TokenType.DoSpaz)
-                return new DoSpaz(GetRange(line, 1, line.Count - 1));
+            else if (line[0].Type == TokenType.Dospiz)
+                return new Dospiz(GetRange(line, 1, line.Count - 1));
             else if (line[0].Type == TokenType.Spif)
                 return new Spif(line.GetRange(1, line.Count - 1));
             else if (line[0].Type == TokenType.Spelz)
                 return new Spelz();
             else if (line[0].Type == TokenType.Spelzif)
                 return new Spelzif(line.GetRange(1, line.Count - 1));
-            else if (line[0].Type == TokenType.Spazdun)
-                return new Spazdun(GetRange(line, 1, line.Count - 1));
-            else if (line[0].Type == TokenType.Spazout)
-                return new Spazout(GetRange(line, 1, line.Count - 1));
+            else if (line[0].Type == TokenType.spizdun)
+                return new spizdun(GetRange(line, 1, line.Count - 1));
+            else if (line[0].Type == TokenType.spizout)
+                return new spizout(GetRange(line, 1, line.Count - 1));
             else if (HasOp(line, TokenType.Equal)) 
                 return new Assignment(line);
             else if (HasOp(line, TokenType.Oparen)) 
                 return new FunctionCall(line);
             else
-                throw new Exception("Unknown line. spaz.");
+                throw new Exception("Unknown line. spiz.");
         }
 
         public Node ProcessLine(List<Token> line, Node parent)

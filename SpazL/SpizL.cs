@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpazL
+namespace spizL
 {
-    public class SpazL
+    public class spizL
     {
         private string file;
-        public SpazL(string file)
+        public spizL(string file)
         {
             this.file = file;
         }

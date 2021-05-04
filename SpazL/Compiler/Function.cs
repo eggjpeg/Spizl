@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpazL
+namespace spizL
 {
 
     class Function
@@ -62,7 +62,7 @@ namespace SpazL
 
             sb.AppendLine(methodSig);
 
-            if (fd.Name == "spaz")
+            if (fd.Name == "spiz")
                 sb.AppendLine(entryPoint);
 
             List<Declaration> decList = new List<Declaration>();

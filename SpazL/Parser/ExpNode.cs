@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpazL
+namespace spizL
 {
     class ExpNode
     {
@@ -28,7 +28,7 @@ namespace SpazL
                 if (Token.Type == TokenType.VarName)
                     return Token.Value;
                 else
-                    throw new Exception("Not a list name, spaz.");
+                    throw new Exception("Not a list name, spiz.");
             }
         }
 
@@ -40,7 +40,7 @@ namespace SpazL
                 else if (Token.Type == TokenType.VarName)
                     return Token.Value;
                 else
-                    throw new Exception("Not a function, spaz.");
+                    throw new Exception("Not a function, spiz.");
             }
         }
 

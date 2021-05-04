@@ -4,8 +4,8 @@ bubbly(lint list):
 	int t = 0
 	int p = 0
 	int i = 0
-	dospaz p < splen(list) - 1
-		dospaz i < splen(list) - 1
+	dospiz p < splen(list) - 1
+		dospiz i < splen(list) - 1
 			spif list[i] > list[i+1]
 				t = list[i+1]
 				list[i+1] = list[i]
@@ -16,15 +16,15 @@ bubbly(lint list):
 
 print_list(lint list):
 	int a = 0
-	dospaz a < splen(list)
+	dospiz a < splen(list)
 		sprint(list[a])
 		a = a + 1..
 
-spaz():
-	sprint('spaz start')
+spiz():
+	sprint('spiz start')
 	lint list
 	spad(list,10,3,0,2,5,4,1,98)
 	sprint(splen(list))
 	bubbly(list)
 	print_list(list)
-	sprint('spaz end').
+	sprint('spiz end').

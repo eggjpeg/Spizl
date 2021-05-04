@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpazL
+namespace spizL
 {
     class Squirrel
     {
         private State State = new State();
-        private string funcName = "spaz";
+        private string funcName = "spiz";
         private AST ast;
         List<object> argList = new List<object>();
 
@@ -43,9 +43,9 @@ namespace SpazL
         private void ValidateArgs(FunctionDef fd)
         {
             if (fd.Params.Count > argList.Count)
-                throw new Exception("SPAZ DOESNT HAVE ENOUGH ARGUMENTS just like you dont have enough chromosomes");
+                throw new Exception("spiz DOESNT HAVE ENOUGH ARGUMENTS just like you dont have enough chromosomes");
             if (fd.Params.Count < argList.Count)
-                throw new Exception("SPAZ HAS TOO MANY ARGUMENTS just like you have too many chromosomes");
+                throw new Exception("spiz HAS TOO MANY ARGUMENTS just like you have too many chromosomes");
         }
         private Node FindFunc(string name)
         {
@@ -54,20 +54,20 @@ namespace SpazL
                     if ((item as FunctionDef).Name == name)
                         return item;
 
-            if (name == "spaz")
+            if (name == "spiz")
                 throw new Exception("couldnt find function : " + name + " other than you");
             else
-                throw new Exception("couldnt find function : " + name + " spaz");
+                throw new Exception("couldnt find function : " + name + " spiz");
         }
 
         public object Traverse()
         {
-            Node spazFunc = FindFunc(funcName);
-            return Traverse(spazFunc);
+            Node spizFunc = FindFunc(funcName);
+            return Traverse(spizFunc);
         }
 
         private bool swordOfKhali = false;
-        private int spazoutLevel = 0;
+        private int spizoutLevel = 0;
         
         private object Traverse(Node node)
         {
@@ -86,26 +86,26 @@ namespace SpazL
                     AddArgsToState(fd);
 
                     if (node.Children.Count == 0)
-                        throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
+                        throw new Exception("MASSIVE spiz DOESNT HAVE ANYTHING IN HIS DOspiz STATEMENT");
 
                     node = node.Children[0];
                     continue;
                 }
-                else if (node is Spazdun)
+                else if (node is spizdun)
                 {
-                    if ((node as Spazdun).Exp == null)
+                    if ((node as spizdun).Exp == null)
                         return null;
 
-                    ret = (node as Spazdun).Exp.Eval(ast, State);
+                    ret = (node as spizdun).Exp.Eval(ast, State);
                     swordOfKhali = true;
                     return ret;
                 }
-                else if (node is Spazout)
+                else if (node is spizout)
                 {
-                    if ((node as Spazout).Exp == null)
-                        spazoutLevel = 1;
+                    if ((node as spizout).Exp == null)
+                        spizoutLevel = 1;
                     else
-                        spazoutLevel = Convert.ToInt32((node as Spazout).Exp.Eval(ast, State));
+                        spizoutLevel = Convert.ToInt32((node as spizout).Exp.Eval(ast, State));
                 }
                 else if (node is FunctionCall)
                 {
@@ -143,12 +143,12 @@ namespace SpazL
                     Spif spif = (node as Spif);
                     object r = spif.Exp.Eval(ast, State);
                     if (!(r is bool))
-                        throw new Exception("SPAZ spif must evaluate to bool SPAZ");
+                        throw new Exception("spiz spif must evaluate to bool spiz");
                     bool rb = (bool)r;
                     if (rb)
                     {
                         if (node.Children.Count == 0)
-                            throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS IF STATEMENT");
+                            throw new Exception("MASSIVE spiz DOESNT HAVE ANYTHING IN HIS IF STATEMENT");
                         node = node.Children[0];
                         conditionCompleted = true;
                         continue;
@@ -161,17 +161,17 @@ namespace SpazL
                     Spelzif spelzIf = (node as Spelzif);
                     var prevSib = GetPrevChild(node);
                     if (!(prevSib is Spif || prevSib is Spelzif))
-                        throw new Exception("spaz cant have else if without previous spif or spelzif SPAZ");
+                        throw new Exception("spiz cant have else if without previous spif or spelzif spiz");
                     if (!(conditionCompleted))
                     {
                         object r = spelzIf.Exp.Eval(ast, State);
                         if (!(r is bool))
-                            throw new Exception("SPAZ spelzif must evaluate to bool SPAZ");
+                            throw new Exception("spiz spelzif must evaluate to bool spiz");
                         bool rb = (bool)r;
                         if (rb)
                         {
                             if (node.Children.Count == 0)
-                                throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS SPELZIF STATEMENT");
+                                throw new Exception("MASSIVE spiz DOESNT HAVE ANYTHING IN HIS SPELZIF STATEMENT");
                             node = node.Children[0];
                             conditionCompleted = true;
                             continue;
@@ -182,24 +182,24 @@ namespace SpazL
                 {
                     var prevSib = GetPrevChild(node);
                     if (!(prevSib is Spif || prevSib is Spelzif))
-                        throw new Exception("spaz cant have spelz without previous spif or elseif SPAZ");
+                        throw new Exception("spiz cant have spelz without previous spif or elseif spiz");
                     if (!(conditionCompleted))
                     {
                         if (node.Children.Count == 0)
-                            throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS SPELZ STATEMENT");
+                            throw new Exception("MASSIVE spiz DOESNT HAVE ANYTHING IN HIS SPELZ STATEMENT");
                         node = node.Children[0];
                         continue;
                     }
                 }
-                else if (node is DoSpaz)
+                else if (node is Dospiz)
                 {
-                    DoSpaz loop = (node as DoSpaz);
+                    Dospiz loop = (node as Dospiz);
 
                     bool r = true;
 
-                    if (loop.Type == DoSpazType.While)
+                    if (loop.Type == DospizType.While)
                         r = (bool)loop.Exp.Eval(ast, State);
-                    else if (loop.Type == DoSpazType.Foreach)
+                    else if (loop.Type == DospizType.Foreach)
                         r = Foreach(loop, r);
 
                     conditionCompleted = false;
@@ -207,7 +207,7 @@ namespace SpazL
                     if (r)
                     {
                         if (node.Children.Count == 0)
-                            throw new Exception("MASSIVE SPAZ DOESNT HAVE ANYTHING IN HIS DOSPAZ STATEMENT");
+                            throw new Exception("MASSIVE spiz DOESNT HAVE ANYTHING IN HIS DOspiz STATEMENT");
                         node = node.Children[0];
                         continue;
                     }
@@ -222,7 +222,7 @@ namespace SpazL
             }
         }
 
-        private bool Foreach(DoSpaz loop, bool r)
+        private bool Foreach(Dospiz loop, bool r)
         {
             VarState index;
             VarState item;
@@ -232,10 +232,10 @@ namespace SpazL
                 index = new VarState(loop.ItemName + "_i", TokenType.Int, 0);
 
                 if (!State.ContainsKey(loop.Collection))
-                    throw new Exception("spaz must have collection '" + loop.Collection + "' defined SPAZ");
+                    throw new Exception("spiz must have collection '" + loop.Collection + "' defined spiz");
 
                 if (State[loop.Collection].Type != TokenType.Lint && State[loop.Collection].Type != TokenType.Lstr)
-                    throw new Exception("spaz '" + loop.Collection + "' must be a collection SPAZ"); 
+                    throw new Exception("spiz '" + loop.Collection + "' must be a collection spiz"); 
 
                 List<object> list = (List<object>)State[loop.Collection].Value;
                 item = new VarState(loop.ItemName, loop.ItemType, list[0]);
@@ -258,19 +258,19 @@ namespace SpazL
 
             return r;
         }
-        private Node GetSpazoutNext(Node n)
+        private Node GetspizoutNext(Node n)
         {
             int count = 0;
             while(true)
             {
-                if (n is DoSpaz)
+                if (n is Dospiz)
                     count++;
-                if (count == spazoutLevel || n.Parent == null)
+                if (count == spizoutLevel || n.Parent == null)
                     break;              
                 n = n.Parent;
             }
-            spazoutLevel = 0;
-            return GetNextChild(n);//its re-evaluating the dudes so spazout doesnt do anything
+            spizoutLevel = 0;
+            return GetNextChild(n);//its re-evaluating the dudes so spizout doesnt do anything
         }
 
         private Node GetNextChild(Node n)
@@ -278,8 +278,8 @@ namespace SpazL
             if (n == null || n.Parent == null || n.Parent is AST)
                 return null;
 
-            if (spazoutLevel > 0)
-                return GetSpazoutNext(n);
+            if (spizoutLevel > 0)
+                return GetspizoutNext(n);
 
 
             for (int i = 0; i < n.Parent.Children.Count - 1; i++)
@@ -287,7 +287,7 @@ namespace SpazL
                     return n.Parent.Children[i + 1];
 
             //If you are here you are looking at the last guy in that branch
-            if (n.Parent is DoSpaz)
+            if (n.Parent is Dospiz)
                 return n.Parent;
             else
                 return GetNextChild(n.Parent);
@@ -302,8 +302,8 @@ namespace SpazL
         }
 
         /*
-         spaz: replace vars with values♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿
-         spaz: fix naive flow into real ♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿
+         spiz: replace vars with values♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿
+         spiz: fix naive flow into real ♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿♿
          */
     }
 }

@@ -16,7 +16,7 @@
     IL_0005:  ldc.i4.5	//push 5 onto stack
     IL_0006:  bne.un.s   IL_0012	// if ur loc var != 5 go to line 12
 
-    IL_0008:  ldstr      "SPAZ"
+    IL_0008:  ldstr      "spiz"
     IL_000d:  call       void [mscorlib]System.Console::WriteLine(string)
     IL_0012:  ldloc.0		//load loc var 0 to stack
     IL_0013:  ldc.i4.1		//load 
